@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+:root {
+  /* Brand */
+  --color-rouge: #d6136c;
+  --color-rouge-deep: #a80e56;
+  --color-gold: #b98a2e;
+
+  /* Surfaces */
+  --surface-canvas: #fbf6ef;
+  --surface-card: #ffffff;
+  --surface-raised: #f3e9dd;
+  --surface-inverted: #211417;
+
+  /* Text */
+  --color-ink: #241a1d;
+  --color-body: #4a3b3f;
+  --color-muted: #8c7a7e;
+  --color-on-inverted: #f6ede2;
+
+  /* Borders */
+  --color-border: #e8dccb;
+}
+
+@theme inline {
+  --color-rouge: var(--color-rouge);
+  --color-rouge-deep: var(--color-rouge-deep);
+  --color-gold: var(--color-gold);
+  --color-surface-canvas: var(--surface-canvas);
+  --color-surface-card: var(--surface-card);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-inverted: var(--surface-inverted);
+  --color-ink: var(--color-ink);
+  --color-body: var(--color-body);
+  --color-muted: var(--color-muted);
+  --color-on-inverted: var(--color-on-inverted);
+  --color-border: var(--color-border);
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+
+  --radius-card: 1rem;
+  --radius-pill: 999px;
+}
+
+@layer base {
+  body {
+    background: var(--surface-canvas);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+}
