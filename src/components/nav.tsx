@@ -39,7 +39,7 @@ export function Nav() {
 
         <Link
           href="/shop"
-          className="rounded-[var(--radius-pill)] bg-[var(--color-rouge)] px-5 py-2 text-sm font-semibold text-white"
+          className="rounded-[var(--radius-pill)] bg-[var(--color-ink)] px-5 py-2 text-sm font-semibold text-[var(--color-on-inverted)]"
         >
           Order now
         </Link>

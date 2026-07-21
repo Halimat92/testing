@@ -6,6 +6,7 @@ import { ProductCard } from "@/components/product-card";
 import { CATALOGUE } from "@/lib/catalogue";
 
 const FEATURED_IDS = ["red-velvet", "cookies-cream-noir", "strawberry-bliss"];
+const BUNDLE_IDS = ["bundle-trio", "bundle-four", "bundle-five"];
 
 export default function HomePage() {
   return (
@@ -13,45 +14,53 @@ export default function HomePage() {
       <Nav />
 
       <main className="flex-1">
-        <section className="mx-auto grid max-w-[1280px] items-center gap-10 px-6 py-16 md:grid-cols-2 md:py-24">
-          <div>
-            <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-[var(--color-rouge)]">
-              Handmade to order · Delivered across the UK
-            </p>
-            <h1 className="text-4xl italic leading-tight md:text-5xl">
-              Dessert jars, layered with care.
+        <section className="relative h-[640px] w-full overflow-hidden md:h-[720px]">
+          <Image
+            src="/images/hompage.PNG"
+            alt="A gift box of Leemah Cakes N More dessert jars, ribboned and ready to send"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-[center_35%]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-inverted)]/90 via-[var(--surface-inverted)]/10 to-transparent" />
+
+          <div className="relative z-10 mx-auto flex h-full max-w-[1280px] flex-col justify-end px-6 pb-16">
+            <h1 className="max-w-2xl text-5xl leading-[1.05] text-[var(--color-on-inverted)] md:text-7xl">
+              Cake, layered
+              <br />
+              <span className="italic text-[var(--color-rouge)]">jar by jar.</span>
             </h1>
-            <p className="mt-5 max-w-md text-base text-[var(--color-body)]">
-              Small-batch cakes in a jar, baked fresh and finished by hand — perfect for gifting,
-              sharing, or keeping entirely to yourself.
+            <p className="mt-6 max-w-md text-[var(--color-on-inverted)]/85">
+              Small-batch dessert jars, baked and finished by hand the day they&apos;re made —
+              nothing shipped from a mix.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-6">
               <Link
                 href="/shop"
-                className="rounded-[var(--radius-pill)] bg-[var(--color-rouge)] px-6 py-3 font-semibold text-white"
+                className="rounded-[var(--radius-pill)] bg-[var(--color-on-inverted)] px-7 py-3 font-semibold text-[var(--color-ink)]"
               >
-                Shop dessert jars
+                Shop the jars
               </Link>
               <Link
-                href="/custom-cakes"
-                className="rounded-[var(--radius-pill)] border-[1.5px] border-[var(--color-ink)] px-6 py-3 font-semibold text-[var(--color-ink)]"
+                href="/about"
+                className="text-sm font-semibold text-[var(--color-on-inverted)] underline underline-offset-4"
               >
-                Enquire about a custom cake
+                Meet Leemah
               </Link>
             </div>
           </div>
-
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-card)]">
-            <Image
-              src="/images/hompage.PNG"
-              alt="A gift box of Leemah Cakes N More dessert jars"
-              fill
-              priority
-              sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover"
-            />
-          </div>
         </section>
+
+        <div className="border-y border-[var(--color-border)] bg-[var(--surface-raised)]">
+          <div className="mx-auto flex max-w-[1280px] flex-wrap items-center gap-x-3 gap-y-2 px-6 py-3 text-xs font-semibold uppercase tracking-widest text-[var(--color-muted)]">
+            <span>Made fresh to order</span>
+            <span aria-hidden className="h-3 w-px bg-[var(--color-border)]" />
+            <span>Delivered across the UK</span>
+            <span aria-hidden className="h-3 w-px bg-[var(--color-border)]" />
+            <span>Minimum order 2 jars</span>
+          </div>
+        </div>
 
         <section className="mx-auto max-w-[1280px] px-6 py-16">
           <div className="mb-10 flex items-end justify-between">
@@ -62,33 +71,44 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
-            {FEATURED_IDS.map((id) => (
-              <ProductCard key={id} item={CATALOGUE[id]} />
+            {FEATURED_IDS.map((id, i) => (
+              <ProductCard key={id} item={CATALOGUE[id]} index={i + 1} />
             ))}
           </div>
         </section>
 
-        <section className="bg-[var(--surface-raised)]">
-          <div className="mx-auto grid max-w-[1280px] items-center gap-10 px-6 py-16 md:grid-cols-2 md:py-20">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] md:order-2">
-              <Image
-                src="/images/baker.jpg"
-                alt="Leemah, founder of Leemah Cakes N More"
-                fill
-                sizes="(min-width: 768px) 40vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-            <div className="md:order-1">
-              <h2 className="text-3xl">Hi, I&apos;m Leemah</h2>
-              <p className="mt-4 text-[var(--color-body)]">
-                Every jar is made fresh to order, in small batches, from my kitchen to your door.
-                No shortcuts, no mixes — just cake layered the way I&apos;d want to eat it.
-              </p>
-              <Link href="/about" className="mt-6 inline-block text-sm font-semibold text-[var(--color-rouge)]">
-                More about Leemah Cakes N More →
+        <section className="bg-[var(--surface-raised)] py-16">
+          <div className="mx-auto max-w-[1280px] px-6">
+            <div className="mb-10 flex items-end justify-between">
+              <h2 className="text-3xl">Bundles for gifting</h2>
+              <Link href="/shop" className="text-sm font-semibold text-[var(--color-rouge)]">
+                View all bundles →
               </Link>
             </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+              {BUNDLE_IDS.map((id) => (
+                <ProductCard key={id} item={CATALOGUE[id]} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-[1280px] px-6 py-14">
+          <div className="flex flex-col items-center gap-5 text-center sm:flex-row sm:text-left">
+            <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-full">
+              <Image src="/images/baker.jpg" alt="Leemah, founder of Leemah Cakes N More" fill className="object-cover" />
+            </div>
+            <p className="text-lg text-[var(--color-body)]">
+              &ldquo;Every jar is made fresh to order, in small batches, from my kitchen to your
+              door — no shortcuts, no mixes.&rdquo;
+              <span className="ml-2 text-sm font-semibold text-[var(--color-muted)]">
+                — Leemah,{" "}
+                <Link href="/about" className="text-[var(--color-rouge)]">
+                  more about us →
+                </Link>
+              </span>
+            </p>
           </div>
         </section>
       </main>

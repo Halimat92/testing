@@ -1,22 +1,32 @@
 import Image from "next/image";
 import type { CatalogueItem } from "@/lib/catalogue";
 
-export function ProductCard({ item }: { item: CatalogueItem }) {
+export function ProductCard({ item, index }: { item: CatalogueItem; index?: number }) {
   return (
-    <article className="group overflow-hidden rounded-[var(--radius-card)] border border-[var(--color-border)] bg-[var(--surface-card)]">
-      <div className="relative aspect-[4/5] overflow-hidden bg-[var(--surface-raised)]">
-        <Image
-          src={item.image}
-          alt={item.name}
-          fill
-          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
-          className="object-cover transition-transform duration-200 group-hover:scale-[1.03]"
-        />
-      </div>
-      <div className="p-5">
-        <h3 className="text-lg">{item.name}</h3>
-        <p className="mt-1 text-sm text-[var(--color-muted)]">{item.description}</p>
-        <p className="mt-3 font-sans text-lg font-bold text-[var(--color-rouge)]">
+    <article className="group relative aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] bg-[var(--surface-raised)]">
+      <Image
+        src={item.image}
+        alt={item.name}
+        fill
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+        className="object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[var(--surface-inverted)]/90 via-[var(--surface-inverted)]/10 to-transparent" />
+
+      {typeof index === "number" ? (
+        <span className="absolute left-4 top-4 text-xs font-semibold tracking-widest text-[var(--color-on-inverted)]/70">
+          {String(index).padStart(2, "0")}
+        </span>
+      ) : null}
+
+      <div className="absolute inset-x-0 bottom-0 p-5">
+        <p className="text-[0.6875rem] font-semibold uppercase tracking-widest text-[var(--color-on-inverted)]/70">
+          {item.jarCount > 1 ? `Bundle · ${item.jarCount} jars` : "Dessert jar"}
+        </p>
+        <h3 className="mt-1 text-xl text-[var(--color-on-inverted)]">
+          {item.name.replace(" Dessert Jar", "")}
+        </h3>
+        <p className="mt-2 text-sm font-semibold text-[var(--color-on-inverted)]">
           £{(item.price / 100).toFixed(2)}
         </p>
       </div>
