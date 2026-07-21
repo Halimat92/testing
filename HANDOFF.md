@@ -8,10 +8,12 @@ snapshot; `PROGRESS_LOG.md` next to this file has the chronological history of *
 
 Migrating Leemah Cakes N More (a Chelmsford, UK dessert-jar/celebration-cake business) from a static
 HTML site (Netlify Functions + Stripe + Netlify Blobs, archived at `legacy-static/`) to a Next.js app on
-Vercel, backed by Supabase. Working branch: **`vercel-nextjs-migration`**, pushed to
-`origin` (github.com/Halimat92/testing) — not merged to `main` yet, `main` is still the old static site.
-`SETUP.md` at repo root is the non-technical guide for the business owner to connect her own Supabase,
-Stripe, and Vercel accounts — send her that file, not this one.
+Vercel, backed by Supabase. **The migration is now merged to `main`** (fast-forward, full history
+preserved) and mirrored on `vercel-nextjs-migration` — both branches are aligned on `origin`
+(github.com/Halimat92/testing). The legacy static site is no longer on `main`; it lives under
+`legacy-static/`. **The site is NOT deployed to Vercel** — no Vercel project has been linked or deployed
+from this repo. `SETUP.md` at repo root is the non-technical guide for the business owner to connect her
+own Supabase, Stripe, and Vercel accounts — send her that file, not this one.
 
 ## Tech stack (verify against package.json — Next.js ships breaking changes fast)
 

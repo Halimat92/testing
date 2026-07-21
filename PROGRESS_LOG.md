@@ -316,3 +316,35 @@ high-confidence issues and verified the headline one in-browser.
 - Security follow-up: the service-role key was shared through WhatsApp/chat during setup. Rotate it in
   Supabase before production, then update both local `.env.local` and Vercel's sensitive environment
   variable. Never paste the replacement into repository files or progress logs.
+
+## 2026-07-21 — Session 8: Controlled merge of the migration to `main`
+
+Verified the completed migration and promoted it to `main` via fast-forward. No Vercel deployment.
+
+- **Build:** `npx next build` succeeded (exit 0); output lists all 16 app routes and `ƒ Proxy
+  (Middleware)`, and `.next/server/middleware.js` is emitted — confirming `src/proxy.ts` is registered.
+- **Lint:** `npx eslint .` passed clean (exit 0, no findings).
+- **Fix presence re-confirmed in code** (not just build success): cart + mobile-menu `createPortal`
+  overlays, itemized checkout summary (`lines.map`), webhook returning HTTP 500 on persistence failure,
+  server-side Stripe session verification on the success page, full email/phone tracking matcher (no
+  short `endsWith`) with the GET handler removed, `isAdminEmail` allowlist enforced in the proxy + orders
+  page + status action, checkout duplicate-ID consolidation and aggregate bounds, env-based Stripe
+  redirect origin, security headers, and `server-only` guards. DESIGN.md direction left unchanged.
+- **Documentation commit:** `f46dd3a` — "Document Supabase connection and deployment handoff". Committed
+  only `HANDOFF.md` + `PROGRESS_LOG.md`, with the "remediation in progress" wording updated to
+  "complete, awaiting the controlled `main` update".
+- **`main` update:** fetched origin, checked out `main` (`c39ebd7`), `git pull --ff-only origin main`
+  (already up to date), then `git merge --ff-only vercel-nextjs-migration` → fast-forwarded cleanly to
+  `f46dd3a`. `main` and `vercel-nextjs-migration` are byte-identical. Pushed `origin main` normally
+  (`c39ebd7..f46dd3a`, no force). `origin/main` now carries the complete 10-commit migration + remediation
+  history.
+- **Secret hygiene:** `.env.local` remained gitignored and untracked (`git ls-files .env.local` empty,
+  `git check-ignore` positive); only `.env.example` is tracked. The staged documentation diff was scanned
+  for Supabase URLs/JWTs/`sb_publishable_`/service-role/Stripe keys/`postgres://` — none present. No secret
+  entered Git at any point.
+- **Vercel:** not linked, not deployed. No Vercel account state was touched.
+- **Next action for the owner:** refresh the Vercel New Project (import) page and confirm it now reads the
+  updated `main` and detects Next.js (previously it showed "Application Preset: Other" because `main` was
+  the legacy site). Add the required environment variables from `.env.example` (Supabase URL/keys,
+  `ADMIN_EMAILS`, Stripe keys once available, `NEXT_PUBLIC_APP_URL`), but **wait for explicit approval
+  before clicking Deploy.**
