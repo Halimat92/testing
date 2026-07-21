@@ -4,16 +4,17 @@ import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { ORDER_STATUSES, buildTimeline } from "@/lib/order-status";
+import { isAdminEmail } from "@/lib/admin-access";
 
 export async function updateOrderStatus(formData: FormData) {
-  // Defense in depth: proxy.ts already gates /admin/*, but a Server Action
-  // can be invoked directly, so re-check the session here too.
+  // Defense in depth: the proxy already gates /admin/*, but a Server Action
+  // can be invoked directly, so re-check authorisation here too.
   const authClient = await getSupabaseServerClient();
   const {
     data: { user },
   } = await authClient.auth.getUser();
 
-  if (!user) {
+  if (!isAdminEmail(user?.email)) {
     throw new Error("Not authorised.");
   }
 

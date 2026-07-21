@@ -94,9 +94,9 @@ export function CheckoutForm() {
         <div>
           <h2 className="text-lg">Your details</h2>
           <div className="mt-3 grid gap-4 sm:grid-cols-2">
-            <input name="name" required placeholder="Full name" className="input-field sm:col-span-2" />
-            <input name="email" type="email" required placeholder="Email" className="input-field" />
-            <input name="phone" type="tel" required placeholder="Phone" className="input-field" />
+            <input name="name" required placeholder="Full name" aria-label="Full name" autoComplete="name" className="input-field sm:col-span-2" />
+            <input name="email" type="email" required placeholder="Email" aria-label="Email" autoComplete="email" className="input-field" />
+            <input name="phone" type="tel" required placeholder="Phone" aria-label="Phone" autoComplete="tel" className="input-field" />
           </div>
         </div>
 
@@ -107,8 +107,9 @@ export function CheckoutForm() {
               <button
                 key={option}
                 type="button"
+                aria-pressed={fulfilmentOption === option}
                 onClick={() => setFulfilmentOption(option)}
-                className={`rounded-[var(--radius-pill)] border-[1.5px] px-5 py-2 text-sm font-semibold capitalize ${
+                className={`inline-flex min-h-11 items-center rounded-[var(--radius-pill)] border-[1.5px] px-5 text-sm font-semibold capitalize ${
                   fulfilmentOption === option
                     ? "border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-on-inverted)]"
                     : "border-[var(--color-border)] text-[var(--color-body)]"
@@ -122,9 +123,9 @@ export function CheckoutForm() {
 
         {fulfilmentOption === "delivery" ? (
           <div className="grid gap-4 sm:grid-cols-2">
-            <input name="address" required placeholder="Delivery address" className="input-field sm:col-span-2" />
-            <input name="city" required placeholder="City" className="input-field" />
-            <input name="postcode" required placeholder="Postcode" className="input-field" />
+            <input name="address" required placeholder="Delivery address" aria-label="Delivery address" autoComplete="street-address" className="input-field sm:col-span-2" />
+            <input name="city" required placeholder="City" aria-label="City" autoComplete="address-level2" className="input-field" />
+            <input name="postcode" required placeholder="Postcode" aria-label="Postcode" autoComplete="postal-code" className="input-field" />
           </div>
         ) : null}
 
@@ -164,7 +165,7 @@ export function CheckoutForm() {
           I confirm I have checked the allergen information before placing this order.
         </label>
 
-        {error ? <p className="text-sm text-[var(--color-rouge)]">{error}</p> : null}
+        {error ? <p role="alert" className="text-sm text-[var(--color-rouge)]">{error}</p> : null}
 
         <button
           type="submit"

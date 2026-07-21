@@ -20,15 +20,15 @@ export function ProductCard({ id, item, index }: { id: string; item: CatalogueIt
         </span>
       ) : null}
 
-      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
+      <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-4 sm:flex-row sm:items-end sm:justify-between sm:p-5">
         <div>
           <p className="text-[0.6875rem] font-semibold uppercase tracking-widest text-[var(--color-on-inverted)]/70">
             {item.jarCount > 1 ? `Bundle · ${item.jarCount} jars` : "Dessert jar"}
           </p>
-          <h3 className="mt-1 text-xl text-[var(--color-on-inverted)]">
+          <h3 className="mt-1 text-lg text-[var(--color-on-inverted)] sm:text-xl">
             {item.name.replace(" Dessert Jar", "")}
           </h3>
-          <p className="mt-2 text-sm font-semibold text-[var(--color-on-inverted)]">
+          <p className="mt-1 text-sm font-semibold text-[var(--color-on-inverted)]">
             £{(item.price / 100).toFixed(2)}
           </p>
         </div>

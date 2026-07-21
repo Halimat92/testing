@@ -26,15 +26,25 @@ function normaliseLookup(value: unknown): string {
   return String(value || "").trim().toLowerCase();
 }
 
+function digitsOnly(value: string): string {
+  return value.replace(/\D/g, "");
+}
+
 function lookupMatches(order: OrderRow, lookup: string): boolean {
   const value = normaliseLookup(lookup);
   if (!value) return false;
 
+  // Exact email match, or exact phone match on digits only. The previous
+  // `endsWith` allowed a 1-digit phone suffix to authorise a lookup once an
+  // order number was known — an enumeration hole. Require the full number.
   const email = normaliseLookup(order.customer_email);
-  const phone = normaliseLookup(order.customer_phone).replace(/\s+/g, "");
-  const cleanValue = value.replace(/\s+/g, "");
+  if (email && value === email) return true;
 
-  return value === email || cleanValue === phone || phone.endsWith(cleanValue);
+  const orderPhoneDigits = digitsOnly(order.customer_phone);
+  const lookupDigits = digitsOnly(value);
+  // Compare last 10 digits so +44 vs 0 prefixes still match, but require a
+  // full national number, not an arbitrary short suffix.
+  return orderPhoneDigits.length >= 10 && lookupDigits.length >= 10 && orderPhoneDigits.slice(-10) === lookupDigits.slice(-10);
 }
 
 function publicOrder(order: OrderRow) {
@@ -118,23 +128,13 @@ async function handleLookup(reference: string | null, lookup: string | null) {
   return NextResponse.json({ order: publicOrder(order) });
 }
 
+// POST only — a GET form would place the customer's email/phone in the URL
+// (server logs, browser history, referrer headers).
 export async function POST(request: NextRequest) {
   try {
     const payload = await request.json();
     const reference = payload.reference || payload.order || payload.session_id;
     const lookup = payload.lookup || payload.email || payload.phone;
-    return await handleLookup(reference, lookup);
-  } catch (error) {
-    console.error("Track order error:", error);
-    return NextResponse.json({ error: "Order tracking is temporarily unavailable." }, { status: 500 });
-  }
-}
-
-export async function GET(request: NextRequest) {
-  try {
-    const params = request.nextUrl.searchParams;
-    const reference = params.get("reference") || params.get("order") || params.get("session_id");
-    const lookup = params.get("lookup") || params.get("email") || params.get("phone");
     return await handleLookup(reference, lookup);
   } catch (error) {
     console.error("Track order error:", error);

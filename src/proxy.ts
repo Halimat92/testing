@@ -1,7 +1,11 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { isAdminEmail } from "@/lib/admin-access";
 
 // Next.js 16 renamed `middleware.ts`/`middleware()` to `proxy.ts`/`proxy()`.
+// With a `src/app` structure this file MUST live at `src/proxy.ts` (beside
+// `app`), and the config export MUST be named `config` — otherwise it is
+// silently ignored and never registered in the middleware manifest.
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
 
@@ -10,6 +14,8 @@ export async function proxy(request: NextRequest) {
 
   // Supabase isn't provisioned yet — let requests through rather than
   // hard-failing every page load while the account is being set up.
+  // (Admin pages/actions re-check auth server-side regardless, so this
+  // isn't the only line of defence.)
   if (!url || !anonKey) {
     return response;
   }
@@ -38,7 +44,7 @@ export async function proxy(request: NextRequest) {
   const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
   const isLoginRoute = request.nextUrl.pathname === "/admin/login";
 
-  if (isAdminRoute && !isLoginRoute && !user) {
+  if (isAdminRoute && !isLoginRoute && !isAdminEmail(user?.email)) {
     const loginUrl = new URL("/admin/login", request.url);
     return NextResponse.redirect(loginUrl);
   }
@@ -46,6 +52,6 @@ export async function proxy(request: NextRequest) {
   return response;
 }
 
-export const proxyConfig = {
+export const config = {
   matcher: ["/admin/:path*"],
 };

@@ -15,7 +15,7 @@
   /* Text */
   --color-ink: #241a1d;
   --color-body: #4a3b3f;
-  --color-muted: #8c7a7e;
+  --color-muted: #6d5c60; /* darkened from #8c7a7e to clear 4.5:1 on cream for small text */
   --color-on-inverted: #f6ede2;
 
   /* Borders */

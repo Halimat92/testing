@@ -35,20 +35,35 @@ type CheckoutPayload = {
   orderNote?: string;
 };
 
+const MAX_LINES = 20;
+const MAX_QUANTITY_PER_ID = 30;
+const MAX_TOTAL_JARS = 100;
+
 function buildOrder(items: CartItem[]) {
-  if (!items.length) throw new Error("Your cart is empty.");
+  if (!Array.isArray(items) || !items.length) throw new Error("Your cart is empty.");
+  if (items.length > MAX_LINES) throw new Error("Too many items in your cart.");
 
   const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
   const orderSummaryParts: string[] = [];
   let totalJars = 0;
   let productSubtotal = 0;
 
+  // Consolidate duplicate IDs first, so submitting the same product across
+  // several lines can't slip past the per-product quantity cap.
+  const quantities = new Map<string, number>();
   for (const item of items) {
-    const catalogueItem = CATALOGUE[item.id];
-    const quantity = Number.parseInt(String(item.quantity), 10);
-
-    if (!catalogueItem || !Number.isInteger(quantity) || quantity <= 0 || quantity > 30) {
+    const quantity = Number.parseInt(String(item?.quantity), 10);
+    if (!item || !CATALOGUE[item.id] || !Number.isInteger(quantity) || quantity <= 0) {
       throw new Error("One of the cart items is not valid.");
+    }
+    quantities.set(item.id, (quantities.get(item.id) || 0) + quantity);
+  }
+
+  for (const [id, quantity] of quantities) {
+    const catalogueItem = CATALOGUE[id];
+
+    if (quantity > MAX_QUANTITY_PER_ID) {
+      throw new Error("One of the cart items has too high a quantity.");
     }
 
     totalJars += catalogueItem.jarCount * quantity;
@@ -72,11 +87,18 @@ function buildOrder(items: CartItem[]) {
     throw new Error("Minimum order is 2 jars.");
   }
 
+  if (totalJars > MAX_TOTAL_JARS) {
+    throw new Error("That's a very large order — please contact us directly to arrange it.");
+  }
+
   return { lineItems, totalJars, productSubtotal, orderSummary: orderSummaryParts.join("; ") };
 }
 
-function getSiteUrl(request: NextRequest): string {
-  return request.headers.get("origin") || process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+// Use the configured canonical origin for Stripe redirect URLs, not the
+// client-supplied Origin header (which an attacker could set to redirect a
+// paid customer to an arbitrary site).
+function getSiteUrl(): string {
+  return process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 }
 
 export async function POST(request: NextRequest) {
@@ -95,7 +117,7 @@ export async function POST(request: NextRequest) {
     const customerEmail = String(customer.email || "").trim();
     const customerName = String(customer.name || "").trim();
     const customerPhone = String(customer.phone || "").trim();
-    const siteUrl = getSiteUrl(request);
+    const siteUrl = getSiteUrl();
     const allergenAcknowledged = payload.allergenAcknowledged === true;
 
     if (!customerEmail || !customerName || !customerPhone) {

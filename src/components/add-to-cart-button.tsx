@@ -16,7 +16,7 @@ export function AddToCartButton({ id }: { id: string }) {
         setAdded(true);
         setTimeout(() => setAdded(false), 1200);
       }}
-      className="rounded-[var(--radius-pill)] bg-[var(--color-on-inverted)] px-4 py-2 text-xs font-semibold text-[var(--color-ink)] transition-opacity hover:opacity-90"
+      className="inline-flex min-h-11 items-center justify-center rounded-[var(--radius-pill)] bg-[var(--color-on-inverted)] px-4 text-xs font-semibold text-[var(--color-ink)] transition-opacity hover:opacity-90"
     >
       {added ? "Added" : "Add to cart"}
     </button>

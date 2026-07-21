@@ -19,7 +19,7 @@ export function Nav() {
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/images/logo.jpeg"
-            alt="Leemah Cakes N More"
+            alt=""
             width={40}
             height={40}
             className="h-10 w-10 rounded-full object-cover"
@@ -27,7 +27,7 @@ export function Nav() {
           <span className="font-display text-lg text-[var(--color-ink)]">Leemah Cakes N More</span>
         </Link>
 
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-6 lg:flex">
           {LINKS.map((link) => (
             <Link
               key={link.href}

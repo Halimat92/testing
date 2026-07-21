@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Archived pre-migration static site, kept for reference only.
     "legacy-static/**",
+    // Audit evidence/scripts (screenshots + capture helpers), not app code.
+    "output/**",
   ]),
 ]);
 

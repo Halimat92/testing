@@ -73,20 +73,21 @@ Shadow use: **one level only**, on hover/focus — `0 8px 24px rgba(36,26,29,0.1
 
 ## 6. Components
 
-- **Primary button**: filled `--color-rouge`, white text, full pill (`border-radius: 999px`), 12px vertical / 24px horizontal padding, weight 600. Hover: `--color-rouge-deep`, no shadow needed — a filled pill darkening is enough feedback.
-- **Secondary button**: transparent background, 1.5px `--color-ink` border, `--color-ink` text, same pill shape. Hover: fills `--surface-raised`.
-- **Product card**: `--surface-card`, 16px radius (not a pill — pills are for buttons/badges only), 1px `--color-border`, image fills top at 4:5 ratio, 20px internal padding. Hover: image scales 1.03 over 200ms, no card shadow pop.
-- **Badge/tag** ("Best Seller", "New"): pill shape, `--surface-raised` background, `--color-rouge` text, 0.6875rem all-caps, 0.06em tracking.
-- **Price**: Inter 700, `--color-rouge`, no currency-symbol styling tricks.
-- **Input**: `--surface-card` fill, 1px `--color-border`, 10px radius, 12px padding, focus ring is a 2px `--color-rouge` outline (not a glow/shadow).
-- **Nav**: sticky, `--surface-card` at 92% opacity + backdrop blur when scrolled, logo left, links center/right, cart pill right. Active link gets a 2px rouge underline, not a background fill.
+- **Primary button** (default): filled `--color-ink` (warm near-black), `--color-on-inverted` text, full pill (`border-radius: 999px`), min-height 44px, ~12px vertical / 24px horizontal padding, weight 600. The dominant CTA colour is ink, NOT rouge — a permanent rouge fill on every page was a key "AI-generated" tell (see §8). Over dark photography the button flips to a filled `--color-on-inverted` (cream) with ink text.
+- **Rouge CTA** (reserved): rouge is used as a *filled button* only for the single highest-intent conversion action — the final "Continue to payment" on checkout. Elsewhere rouge is text-only (links, the headline accent word, small prices/tags on light surfaces).
+- **Secondary button**: transparent background, 1.5px `--color-ink` border, `--color-ink` text, same pill shape. Hover: fills `--surface-raised`. Don't pair a filled + outlined button of equal weight side by side (matched-pair look) — prefer one filled CTA + a plain underlined text link.
+- **Product card**: photo-overlay, not a white panel. `4:5` real photograph fills the whole card at 16px radius, a bottom-up dark scrim carries the flavour name (Newsreader), an optional numbered tag, price, and the Add button. No white card body, no paragraph description. Hover: image scales ~1.04, no shadow.
+- **Badge/tag**: pill shape, `--surface-raised` or scrim background, small tracked all-caps label in `--color-on-inverted`/`--color-muted`, 0.6875rem, 0.06em tracking. (This tracked-caps micro-label is the ONLY place all-caps is allowed, and it must be the sans, never Newsreader.)
+- **Price**: Manrope 700; `--color-rouge` on light surfaces, `--color-on-inverted` over photography.
+- **Input**: use the `.input-field` component class — `--surface-card` fill, 1px `--color-border`, 10px radius, ~12px padding, focus ring is a 2px `--color-rouge` outline (not a glow/shadow).
+- **Nav**: sticky, `--surface-card` at 92% opacity + backdrop blur, logo left, links (desktop `lg+`) centre/right, cart + hamburger right. NOTE: because the header uses `backdrop-filter`, any overlay (cart drawer, mobile menu) MUST be rendered through a `createPortal(..., document.body)` — a `fixed` descendant of a backdrop-filtered element is trapped in that element's box, not the viewport (this was a real shipped bug).
 
 ## 7. Responsive Behaviour
 
 - Breakpoints: 375 / 768 / 1024 / 1280.
-- Touch targets: 44px minimum on all interactive elements.
-- Product grid collapses 4 → 3 → 2 → 1 (never below 2-col on mobile for the shop grid — single-column feels sparse for jar photography).
-- Sticky nav collapses to a hamburger below 768px; cart pill stays visible at all sizes.
+- Touch targets: 44px minimum on all interactive elements (use `min-h-11` / `h-11 w-11`).
+- Product grid collapses 4 → 3 → 2 (never below 2-col on mobile for the shop grid — single-column feels sparse for jar photography). Card internals stack vertically on the narrowest widths so the title/price and Add button don't crowd.
+- Desktop nav shows at `lg` (1024px) and above; below that it's a hamburger (portalled full-screen menu). Cart button stays visible at all sizes.
 
 ## 8. Do's and Don'ts
 
@@ -100,12 +101,14 @@ Shadow use: **one level only**, on hover/focus — `0 8px 24px rgba(36,26,29,0.1
 **Don't:**
 - Don't use radial glow blobs or diagonal rainbow gradients as background decoration — this is the single biggest tell of the old site and must not reappear.
 - Don't introduce a second chromatic accent color. If something needs to "pop" and rouge doesn't fit, use more whitespace or a gold hairline instead.
-- Don't fill secondary buttons with rouge — only the primary CTA per view should be a filled pill.
+- Don't make rouge the dominant/default button colour — ink is the default fill; rouge-as-fill is reserved for the single final checkout CTA.
+- Don't place a filled + outlined button of equal weight side by side (the matched-pair AI tell) — one filled CTA + a plain text link.
 - Don't use a drop shadow at rest — reach for a 1px border first.
-- Don't set Fraunces in bold or all-caps — its personality collapses at heavy weights.
+- Don't set Newsreader in bold or all-caps — its personality collapses at heavy weights, and all-caps belongs to the sans micro-labels only.
+- Don't apply an all-caps tracked label using the heading font — those small tracked eyebrow/section labels must be Manrope (`font-sans`), or they inherit Newsreader from the base `h*` rule and break the contract.
 - Don't mix corner radii on the same component family (cards are always 16px, buttons/badges are always pill — never a mix).
 - Don't use stock bakery photography — every hero/lifestyle image should be a real Leemah product shot or a real customer/founder photo.
 
 ## 9. Agent Prompt Guide (TL;DR)
 
-Use `var(--color-rouge)` for every CTA, link, and price — nothing else gets that color. Buttons and badges are always full pill (`999px`); cards are always `16px` radius — never mix. Headings are Fraunces (never bold, never all-caps); everything else is Inter. Backgrounds are `--surface-canvas` (cream) with `--surface-card` (white) for panels — no gradients, no radial glows, no drop shadows at rest. Gold is a hairline/icon accent only. When in doubt, add whitespace, not a new color.
+Default button fill is `--color-ink` (or cream over photos); rouge-as-fill is reserved for the single final checkout CTA. Rouge otherwise is text-only — links, the headline accent word, small prices/tags on light surfaces. Buttons and badges are always full pill (`999px`), min 44px tall; cards are always `16px` radius — never mix. Headings are Newsreader (never bold, never all-caps); everything else is Manrope, including any all-caps tracked micro-label (add `font-sans` so it doesn't inherit Newsreader). Backgrounds are `--surface-canvas` (cream) with `--surface-card` (white) for panels — no gradients, no radial glows, no drop shadows at rest. Product cards are photo-overlay, not white panels. Any overlay above a `backdrop-filter` ancestor must be portalled to `document.body`. Gold is a hairline/icon accent only. When in doubt, add whitespace, not a new color.

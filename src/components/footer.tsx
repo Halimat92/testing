@@ -13,7 +13,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-[var(--color-on-inverted)] opacity-70">Shop</h3>
+            <h3 className="mb-3 font-sans text-xs font-semibold uppercase tracking-widest text-[var(--color-on-inverted)] opacity-70">Shop</h3>
             <ul className="flex flex-col gap-2 text-sm">
               <li><Link href="/shop">Dessert Jars</Link></li>
               <li><Link href="/custom-cakes">Custom Cakes</Link></li>
@@ -23,7 +23,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-[var(--color-on-inverted)] opacity-70">Company</h3>
+            <h3 className="mb-3 font-sans text-xs font-semibold uppercase tracking-widest text-[var(--color-on-inverted)] opacity-70">Company</h3>
             <ul className="flex flex-col gap-2 text-sm">
               <li><Link href="/about">About</Link></li>
               <li><Link href="/reviews">Reviews</Link></li>

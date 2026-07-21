@@ -160,3 +160,133 @@ Also built the cart/checkout flow flagged as the top-priority gap in the previou
   `getBoundingClientRect`/`elementFromPoint` checks). When screenshots seem to show a missing image or a
   frozen page, verify against the DOM/network layer before concluding it's a real site bug — it has been
   a tool artifact every time this session, not an actual defect, whenever checked.
+
+## 2026-07-21 18:00 WAT - Session 6: Independent full-site audit and real mobile reproduction
+
+Audited the `vercel-nextjs-migration` branch independently after reading `HANDOFF.md`, this log, and
+`DESIGN.md`. Ran a production build successfully and rendered all nine requested customer pages at
+375px, 390px, 768px, and 1024px. The 36-page screenshot matrix plus focused cart/menu/checkout evidence
+is in `output/playwright/audit-2026-07-21/`.
+
+- **Confirmed mobile bug, root-caused:** the cart drawer and mobile menu use `position: fixed` while being
+  rendered inside the sticky header, whose `backdrop-blur` creates their containing block. Both overlays
+  are therefore constrained to the header instead of the viewport. The cart visibly collapses to a thin
+  strip and its quantity controls are obscured; the menu shows only its first link. Both also lack dialog
+  semantics, Escape handling, focus trapping/return, background inertness, and scroll locking.
+- **Additional mobile defect:** the required two-column shop grid is present, but the product card keeps
+  its title/price and Add button in one horizontal row. At 375/390px the copy and 32px-high button clip
+  and crowd each other. Preserve the two-column direction; reflow the card's internal controls instead.
+  The desktop nav also activates too early at exactly 768px and wraps into a crowded two-line header.
+- **Checkout-summary report not reproduced on this branch:** after adding two different products through
+  `/shop`, `/checkout` rendered both item names, quantities, and prices at every requested width and after
+  a hard reload. The aside's `lines.map(...)` implementation and persisted cart state behaved correctly.
+- **Critical payment integrity finding:** the Stripe webhook catches a failed Supabase order write and
+  still returns HTTP 200. Stripe will treat the signed payment event as delivered, so a paid order can be
+  permanently absent from the admin/tracking data. Only acknowledge after a durable, idempotent save.
+- **High checkout-trust finding:** `/checkout/success` does not retrieve or verify the Stripe session. Any
+  arbitrary `session_id` produces an "Order confirmed" page and invented order number; the persisted cart
+  also remains populated after this page. Verify payment server-side and clear the cart only after a
+  verified successful session.
+- **High tracking-enumeration finding:** the public tracking matcher accepts `phone.endsWith(cleanValue)`
+  with no minimum length, so a one-digit phone suffix can authorize an order lookup. The route has no
+  application rate limit and also accepts PII in GET query parameters. Require exact normalized contact
+  matching (or a deliberately sized secondary secret), rate-limit attempts, and use POST only.
+- **Admin proxy is not active:** the project uses `src/app`, but `proxy.ts` is at repository root and
+  exports `proxyConfig`; the Next 16 build's middleware manifest is empty. It must be `src/proxy.ts` and
+  export `config`. The existing admin orders page and update Server Action do re-check the Supabase user,
+  which prevents this misconfiguration from being an immediate UI bypass, but every authenticated user is
+  currently treated as an admin and future `/admin/*` routes would have no perimeter protection.
+- **Food-safety/launch blocker:** checkout requires confirmation that allergen information was checked,
+  but no product/page supplies that information or links to it. UK distance-selling guidance requires
+  allergen information before purchase and at delivery.
+- **Other API hardening:** checkout prices are correctly recalculated from the server catalogue and the
+  webhook signature hard-fails when its secret is missing. Remaining gaps are duplicate IDs bypassing the
+  per-line quantity cap, no request/array/string bounds or endpoint rate limit, a non-atomic coupon usage
+  cap that fails open on count errors, new Stripe coupon/session objects on every unauthenticated request,
+  and success/cancel URLs derived from an untrusted Origin header instead of a canonical allowlist.
+- **Supabase/RLS passed with caveats:** service-role code is only used server-side; the browser client is
+  not querying orders/products; RLS is enabled with no anon/authenticated policies. Add `server-only`
+  guards to the privileged modules. No committed credentials were found in the working tree or branch
+  history; only `.env.example` appears, although `.gitignore` should ignore all `.env*` variants except
+  the example file.
+- **Accessibility:** measured touch targets below the 44px contract across the site (including 28px cart
+  quantity buttons, 32px Add buttons, 36px Cart, 40px hamburger, and many text links). Muted text on cream
+  is about 3.76:1 and is used below large-text sizes. Checkout contact/address fields are placeholder-only,
+  note/coupon labels are not associated, fulfilment buttons expose no selected-state semantics, and form
+  errors are not announced. Review stars have no accessible rating text.
+- **DESIGN/AI-pattern audit:** the one-accent palette, named surfaces, real photography, mixed
+  roman/italic headlines, and lack of resting card shadows generally hold. Drift remains in the matched
+  filled+outlined contact CTAs and the success-page CTA group; repeated tiny tracked eyebrow labels on
+  About/Celebration/Reviews/Track/Success; About's symmetric three-column feature-style block; and
+  all-caps/font-semibold `h2`/`h3` labels inheriting Newsreader. `DESIGN.md` itself still contradicts the
+  accepted Session 2/4 direction in its old product-card/rouge-button contract and its final Fraunces/Inter
+  summary, so update the contract to document the approved direction rather than silently redesigning it.
+- **Next.js 16 checks:** async `searchParams` and `cookies()` are awaited correctly, there is no
+  `useSearchParams()` requiring Suspense, Server Actions re-check auth, no deprecated `middleware.ts`
+  exists, and the production build passes. The proxy convention is the material Next 16 failure.
+- No real Stripe test payment, signed webhook delivery, Supabase-backed tracking result, or authenticated
+  admin workflow could be completed because this environment has no Stripe/Supabase credentials. Those
+  remain mandatory pre-launch integration tests after setup.
+
+## 2026-07-21 — Session 6: Remediating the Codex audit (Opus 4.8)
+
+Worked through the Codex audit findings. Verified each load-bearing claim before acting, then fixed the
+high-confidence issues and verified the headline one in-browser.
+
+**Two reported bugs — root-caused to a single cause and fixed:**
+- The header uses `backdrop-filter` (backdrop-blur). A `backdrop-filter` (like `transform`/`filter`)
+  establishes a containing block, so the cart drawer and mobile menu — `fixed` descendants of the header
+  — were positioned relative to the *header*, not the viewport. This is why the mobile nav showed only its
+  first link and why the cart drawer's product rows were clipped while its subtotal survived (which the
+  user had perceived as "checkout only showed the total price" — it was the broken drawer, not the
+  checkout page, exactly as Codex reconciled). Fix: both overlays now render via
+  `createPortal(..., document.body)`, escaping the containing block, plus Escape-to-close, scroll lock,
+  and `role="dialog"`/`aria-modal`. **Verified in-browser via DOM inspection**: both overlays are now
+  direct children of `document.body` (not inside `header`), cover the full viewport (top:0, height ===
+  viewport), the cart shows all 4 product rows, and the mobile menu shows all 6 links.
+- Product card internals now stack vertically on the narrowest widths (were crowding side-by-side in the
+  2-col mobile grid). Desktop nav breakpoint moved md→lg so it no longer crowds/wraps at 768px.
+
+**Critical/High security fixed:**
+- Webhook returned HTTP 200 even when the Supabase order write failed → Stripe would stop retrying and the
+  paid order would be lost forever. Now returns 500 on persistence failure so Stripe retries; also only
+  fulfils `payment_status === "paid"` and additionally handles `checkout.session.async_payment_succeeded`
+  for delayed payment methods.
+- Success page was forgeable (any `session_id` showed "Order confirmed"). Now verifies the session with
+  Stripe server-side and only confirms genuinely-paid sessions; cart is cleared only after verification.
+- Order tracking enumeration: `phone.endsWith(value)` allowed a 1-digit suffix to authorise a lookup.
+  Now requires a full email match or a full national phone-number match (last 10 digits). Removed the GET
+  handler (it put email/phone in URLs); POST only.
+- `proxy.ts` was at repo root exporting `proxyConfig` — with a `src/app` structure Next 16 requires
+  `src/proxy.ts` exporting `config`, so the proxy was NOT registered (empty middleware manifest = zero
+  perimeter protection on `/admin`). Moved to `src/proxy.ts` + `config`. Build now reports
+  "ƒ Proxy (Middleware)" and the manifest is populated. Verified against the bundled Next 16 docs.
+- Admin was "any authenticated Supabase user". Added `src/lib/admin-access.ts` — an `ADMIN_EMAILS`
+  allowlist (fail-closed if unset), enforced in the proxy, the orders page, and the status Server Action.
+- Checkout: duplicate product IDs are now consolidated before the per-ID quantity cap (previously
+  bypassable), plus array-length and total-jars aggregate bounds. Stripe redirect origin now uses the
+  configured `NEXT_PUBLIC_APP_URL`, not the client `Origin` header.
+- Added security headers (nosniff, X-Frame-Options, Referrer-Policy, Permissions-Policy) in
+  `next.config.ts`; `server-only` guards on the privileged Supabase modules; `.gitignore` now ignores all
+  `.env*` except `.env.example`.
+
+**Design / anti-"AI look" (DESIGN.md-compliance):**
+- Rewrote the stale parts of DESIGN.md (§6/§8/§9 still said Fraunces/Inter, rouge-primary-buttons, and
+  white-bordered cards) to match the approved direction (Newsreader/Manrope, ink-default buttons with
+  rouge reserved for the final checkout CTA, photo-overlay cards), and documented the backdrop-filter/
+  portal rule so it can't regress.
+- Footer + contact uppercase tracked labels were inheriting Newsreader (contract violation) — now
+  `font-sans`. Broke the matched filled+outlined button pair on the contact page into one filled CTA + a
+  text link. Darkened `--color-muted` (#8c7a7e → #6d5c60) to clear 4.5:1 on cream for small text.
+- Accessibility: 44px touch targets on cart/nav/quantity/Add controls, aria-labels + autoComplete on
+  checkout inputs, `aria-pressed` on the fulfilment toggle, `role="alert"` on the checkout error,
+  screen-reader "N out of 5 stars" text on reviews, and removed the logo's doubled accessible name.
+
+**Deferred (need a decision or external input — flagged to the user, not silently done):**
+- Allergen info per product (Natasha's Law) — genuinely blocked on real ingredient data from the business
+  owner; the checkout still asks for acknowledgment but there's still nothing to link to. Launch blocker.
+- Coupon redemption race / fail-open — needs an atomic DB reservation (Postgres RPC), best done against
+  a real Supabase instance. Left as-is with the existing count-then-insert.
+- Rate limiting on tracking/checkout — still needs a KV/Redis provider (Upstash via Vercel Marketplace).
+- Content Security Policy header — not added yet (needs per-page nonce work for inline styles).
+- The 14MB `output/` audit-artifact folder is now gitignored (kept locally, not committed).

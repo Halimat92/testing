@@ -85,25 +85,35 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Webhook signature verification failed." }, { status: 400 });
   }
 
-  if (stripeEvent.type !== "checkout.session.completed") {
+  // `async_payment_succeeded` covers delayed payment methods (e.g. bank
+  // debits) that confirm after the Checkout redirect completes.
+  const handledEvents = ["checkout.session.completed", "checkout.session.async_payment_succeeded"];
+  if (!handledEvents.includes(stripeEvent.type)) {
     return NextResponse.json({ received: true });
   }
 
   const session = stripeEvent.data.object as Stripe.Checkout.Session;
   const metadata = session.metadata || {};
   const couponCode = normaliseCouponCode(metadata.coupon_code);
-  const isPaid = !session.payment_status || session.payment_status === "paid";
 
-  if (isPaid) {
-    try {
-      const orderNumber = await saveCompletedOrder(session);
-      console.log(`Saved order ${orderNumber}.`);
-    } catch (error) {
-      console.error("Could not save completed order.", error);
-    }
+  // Only fulfil once the payment is actually settled. A pending/unpaid
+  // session (delayed payment method still processing) is acknowledged but
+  // not written — the async_payment_succeeded event will follow.
+  if (session.payment_status !== "paid") {
+    return NextResponse.json({ received: true });
   }
 
-  if (isPaid && couponCode && couponCode !== "NONE" && metadata.coupon_type === "local_coupon") {
+  try {
+    const orderNumber = await saveCompletedOrder(session);
+    console.log(`Saved order ${orderNumber}.`);
+  } catch (error) {
+    // Return a non-2xx so Stripe retries delivery. Returning 200 here would
+    // permanently drop a paid order whose DB write happened to fail.
+    console.error("Could not save completed order — asking Stripe to retry.", error);
+    return NextResponse.json({ error: "Order could not be persisted." }, { status: 500 });
+  }
+
+  if (couponCode && couponCode !== "NONE" && metadata.coupon_type === "local_coupon") {
     await recordCouponRedemption(couponCode, session.id);
   }
 

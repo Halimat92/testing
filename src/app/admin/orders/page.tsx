@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSupabaseServerClient } from "@/lib/supabase/server";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { ORDER_STATUSES, STATUS_LABELS } from "@/lib/order-status";
+import { isAdminEmail } from "@/lib/admin-access";
 import { signOut } from "@/app/admin/login/actions";
 import { updateOrderStatus } from "./actions";
 
@@ -26,7 +27,7 @@ export default async function AdminOrdersPage() {
     data: { user },
   } = await authClient.auth.getUser();
 
-  if (!user) {
+  if (!isAdminEmail(user?.email)) {
     redirect("/admin/login");
   }
 

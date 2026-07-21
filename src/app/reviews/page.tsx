@@ -10,9 +10,12 @@ export const metadata: Metadata = {
 
 function Stars({ count }: { count: number }) {
   return (
-    <span aria-hidden className="text-[var(--color-gold)]">
-      {"★".repeat(count)}
-      {"☆".repeat(5 - count)}
+    <span>
+      <span aria-hidden className="text-[var(--color-gold)]">
+        {"★".repeat(count)}
+        {"☆".repeat(5 - count)}
+      </span>
+      <span className="sr-only">{count} out of 5 stars</span>
     </span>
   );
 }
