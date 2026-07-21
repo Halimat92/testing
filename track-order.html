@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Track your order | Leemah Cakes N More</title>
+  <meta name="description" content="Track your Leemah Cakes N More order using your order number and checkout email or phone." />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      --pink: #E91E63;
+      --black: #1F1B1A;
+      --cream: #FFF9F6;
+      --blush: #FCE7EE;
+      --gold: #C8A96A;
+      --muted: #6E5D58;
+      --border: #EADDD7;
+      --green: #1F9D68;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--cream), #fff 48%, var(--blush));
+      color: var(--black);
+      font-family: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    h1, h2, h3 { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+    .topbar {
+      background: #DDA091;
+      color: var(--black);
+      padding: 9px 16px;
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: .3px;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .lc-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .lc-logo-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 999px;
+      background: white;
+      border: 1px solid #F6C8DB;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 8px 24px rgba(0,0,0,.06);
+    }
+
+    .brand-logo-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 999px;
+      display: block;
+    }
+
+    .lc-logo-text {
+      margin: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: .9;
+      color: var(--black);
+    }
+
+    .lc-logo-text span { color: var(--pink); }
+
+    .lc-logo-sub {
+      margin: 5px 0 0;
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+      font-weight: 700;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+    }
+
+    .btn-primary { background: var(--pink); color: white; box-shadow: 0 12px 30px rgba(174,89,76,.22); }
+    .btn-light { background: white; color: var(--black); border: 1px solid var(--border); }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 54px 20px 70px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 430px) minmax(0, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(255,255,255,.9);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: 0 18px 44px rgba(232,25,122,.08);
+      padding: clamp(22px, 4vw, 34px);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--pink);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(42px, 7vw, 72px);
+      line-height: .92;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 18px 0 0;
+      color: #5F4B55;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    label span {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    input {
+      width: 100%;
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 15px;
+      font: inherit;
+      outline: none;
+      background: #fff;
+    }
+
+    input:focus { border-color: var(--pink); }
+
+    .order-card { display: none; }
+    .order-card.show { display: block; }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 9px 13px;
+      background: rgba(31,157,104,.1);
+      color: #14764D;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .order-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .meta-box {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px;
+      background: var(--cream);
+    }
+
+    .meta-box span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .meta-box strong {
+      font-size: 15px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 0;
+      margin-top: 20px;
+    }
+
+    .step {
+      position: relative;
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr);
+      gap: 14px;
+      padding-bottom: 20px;
+    }
+
+    .step:before {
+      content: "";
+      position: absolute;
+      left: 16px;
+      top: 34px;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .step:last-child { padding-bottom: 0; }
+    .step:last-child:before { display: none; }
+
+    .marker {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: white;
+      border: 2px solid var(--border);
+      color: var(--muted);
+      font-weight: 900;
+      z-index: 1;
+    }
+
+    .step.complete .marker {
+      background: var(--green);
+      border-color: var(--green);
+      color: white;
+    }
+
+    .step strong {
+      display: block;
+      margin-top: 5px;
+      font-size: 16px;
+    }
+
+    .step small {
+      display: block;
+      color: var(--muted);
+      margin-top: 4px;
+      font-size: 13px;
+    }
+
+    .message {
+      display: none;
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #FFF4D8;
+      color: #70501A;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .message.show { display: block; }
+
+    @media (max-width: 840px) {
+      .header-inner { padding: 12px 14px; }
+      .header .btn { display: none; }
+      .page { padding: 30px 14px 42px; }
+      .layout { grid-template-columns: 1fr; }
+      .order-meta { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">Fresh dessert jars in Chelmsford - pickup and local delivery available</div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a class="lc-logo" href="index.html#home" aria-label="Leemah Cakes N More home">
+        <div class="lc-logo-circle">
+          <img class="brand-logo-img" src="Images/logo.jpeg" alt="Leemah Cakes N More logo">
+        </div>
+          <div>
+            <p class="lc-logo-text">Leemah <span>Cakes</span></p>
+            <p class="lc-logo-sub">CAKES N MORE</p>
+          </div>
+      </a>
+      <a class="btn btn-light" href="shop.html">Back</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="layout">
+      <section class="panel">
+        <p class="eyebrow">Order tracking</p>
+        <h1>See where your order is.</h1>
+        <p class="lead">Enter your order number and the email or phone number used at checkout. We only show the order progress, not private payment details.</p>
+
+        <form id="track-form">
+          <label>
+            <span>Order number</span>
+            <input name="reference" required placeholder="LCM-1234ABCD" autocomplete="off">
+          </label>
+          <label>
+            <span>Email or phone</span>
+            <input name="lookup" required placeholder="you@email.com or phone number" autocomplete="email">
+          </label>
+          <button class="btn btn-primary" type="submit">Track order</button>
+        </form>
+
+        <div class="message" id="track-message"></div>
+      </section>
+
+      <section class="panel order-card" id="order-card" aria-live="polite">
+        <div class="status-pill" id="status-pill">Order received</div>
+        <h2 id="order-title">Order details</h2>
+        <p class="lead" id="order-summary"></p>
+
+        <div class="order-meta">
+          <div class="meta-box"><span>Order number</span><strong id="order-number"></strong></div>
+          <div class="meta-box"><span>Fulfilment</span><strong id="order-fulfilment"></strong></div>
+          <div class="meta-box"><span>Total jars</span><strong id="order-jars"></strong></div>
+          <div class="meta-box"><span>Last updated</span><strong id="order-updated"></strong></div>
+        </div>
+
+        <h3>Progress</h3>
+        <div class="timeline" id="order-timeline"></div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById("track-form");
+    const message = document.getElementById("track-message");
+    const orderCard = document.getElementById("order-card");
+
+    function formatDate(value) {
+      if (!value) return "Waiting for update";
+      return new Intl.DateTimeFormat("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(new Date(value));
+    }
+
+    function showMessage(text) {
+      message.textContent = text;
+      message.classList.add("show");
+    }
+
+    function hideMessage() {
+      message.textContent = "";
+      message.classList.remove("show");
+    }
+
+    function renderOrder(order) {
+      document.getElementById("status-pill").textContent = order.statusLabel || "Order received";
+      document.getElementById("order-title").textContent = `Order ${order.orderNumber}`;
+      document.getElementById("order-summary").textContent = order.orderSummary || "Your order details are safely stored.";
+      document.getElementById("order-number").textContent = order.orderNumber;
+      document.getElementById("order-fulfilment").textContent = order.fulfilment || "To be confirmed";
+      document.getElementById("order-jars").textContent = order.totalJars || "To be confirmed";
+      document.getElementById("order-updated").textContent = formatDate(order.updatedAt);
+
+      document.getElementById("order-timeline").innerHTML = (order.timeline || []).map(step => `
+        <div class="step ${step.complete ? "complete" : ""}">
+          <div class="marker">${step.complete ? "OK" : ""}</div>
+          <div>
+            <strong>${step.label}</strong>
+            <small>${formatDate(step.at)}</small>
+          </div>
+        </div>
+      `).join("");
+
+      orderCard.classList.add("show");
+    }
+
+    async function trackOrder(reference, lookup) {
+      const response = await fetch("/.netlify/functions/track-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reference, lookup })
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(data.error || "We could not find that order.");
+      }
+
+      return data.order;
+    }
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+      hideMessage();
+      orderCard.classList.remove("show");
+
+      const submitButton = form.querySelector("button");
+      const formData = new FormData(form);
+      submitButton.disabled = true;
+      submitButton.textContent = "Checking...";
+
+      try {
+        const order = await trackOrder(formData.get("reference"), formData.get("lookup"));
+        renderOrder(order);
+      } catch (error) {
+        showMessage(error.message || "Order tracking is temporarily unavailable.");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Track order";
+      }
+    });
+
+    const params = new URLSearchParams(window.location.search);
+    const reference = params.get("order") || params.get("session_id");
+    if (reference) {
+      form.elements.reference.value = reference;
+    }
+  </script>
+</body>
+</html>
