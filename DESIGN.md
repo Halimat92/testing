@@ -36,22 +36,22 @@ Not minimalist (Milk Bar), not corporate (Nike monochrome). Warm, tactile, a lit
 
 ## 3. Typography
 
-Two families, both chosen specifically to break the Cormorant+Outfit AI-bakery cliché while staying warm.
+Two families. Originally Fraunces + Inter, changed after user feedback that Fraunces reads as *the* trendy AI-website-builder serif right now — swapped for the pairing used in a sister project (`omt_advisory`), which is more restrained and less visually "branded" as an AI default.
 
-- **Display / headings — Fraunces** (variable, optical size + `SOFT` axis where available). Characterful serif with real ink-trap personality — reads hand-crafted without reaching for a script font.
-- **Body / UI — Inter**. Clean, highly legible, disappears at small sizes.
+- **Display / headings — Newsreader** (variable, italic available). Editorial serif with real gravitas but no quirky ink-trap character — reads considered rather than trendy.
+- **Body / UI — Manrope**. Clean geometric sans, slightly warmer terminals than Inter, disappears at small sizes.
 
 | Use | Family | Size (desktop) | Weight | Tracking | Notes |
 |---|---|---|---|---|---|
-| Hero headline | Fraunces | 3.5–4.5rem | 500, italic optical | -0.01em | Sentence case, never all-caps |
-| Section heading (h2) | Fraunces | 2.25rem | 500 | -0.01em | |
-| Card/product title (h3) | Fraunces | 1.25rem | 500 | normal | |
-| Nav / buttons / labels | Inter | 0.9375rem | 600 | 0.01em | Sentence case; all-caps reserved for tiny tracked eyebrow labels only (e.g. "BEST SELLER" badge, 0.6875rem) |
-| Body | Inter | 1rem | 400 | normal | line-height 1.6 |
-| Caption / helper | Inter | 0.8125rem | 400 | normal | `--color-muted` |
-| Price | Inter | 1.125rem | 700 | normal | `--color-rouge` |
+| Hero headline | Newsreader | 3.5–4.5rem | 500, italic for accent line | -0.01em | Sentence case, never all-caps |
+| Section heading (h2) | Newsreader | 2.25rem | 500 | -0.01em | |
+| Card/product title (h3) | Newsreader | 1.25rem | 500 | normal | |
+| Nav / buttons / labels | Manrope | 0.9375rem | 600 | 0.01em | Sentence case; all-caps reserved for tiny tracked eyebrow labels only (e.g. "BEST SELLER" badge, 0.6875rem) |
+| Body | Manrope | 1rem | 400 | normal | line-height 1.6 |
+| Caption / helper | Manrope | 0.8125rem | 400 | normal | `--color-muted` |
+| Price | Manrope | 1.125rem | 700 | normal | `--color-rouge` |
 
-Weight ceiling: Fraunces never goes bold (700+) — its personality is in the letterforms, not the weight. Inter carries 400/500/600/700, nothing between.
+Weight ceiling: Newsreader stays in the 400–500 range — it's not designed as a bold display face, and pushing it heavier loses the editorial feel. Manrope carries 400/500/600/700, nothing between.
 
 ## 4. Layout & Spacing
 

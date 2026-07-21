@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { fraunces, inter } from "@/lib/fonts";
+import { newsreader, manrope } from "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      className={`${fraunces.variable} ${inter.variable} h-full antialiased`}
+      className={`${newsreader.variable} ${manrope.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
