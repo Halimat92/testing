@@ -72,7 +72,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
             {FEATURED_IDS.map((id, i) => (
-              <ProductCard key={id} item={CATALOGUE[id]} index={i + 1} />
+              <ProductCard key={id} id={id} item={CATALOGUE[id]} index={i + 1} />
             ))}
           </div>
         </section>
@@ -88,7 +88,7 @@ export default function HomePage() {
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
               {BUNDLE_IDS.map((id) => (
-                <ProductCard key={id} item={CATALOGUE[id]} />
+                <ProductCard key={id} id={id} item={CATALOGUE[id]} />
               ))}
             </div>
           </div>

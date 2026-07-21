@@ -1,7 +1,8 @@
 import Image from "next/image";
 import type { CatalogueItem } from "@/lib/catalogue";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 
-export function ProductCard({ item, index }: { item: CatalogueItem; index?: number }) {
+export function ProductCard({ id, item, index }: { id: string; item: CatalogueItem; index?: number }) {
   return (
     <article className="group relative aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] bg-[var(--surface-raised)]">
       <Image
@@ -19,16 +20,19 @@ export function ProductCard({ item, index }: { item: CatalogueItem; index?: numb
         </span>
       ) : null}
 
-      <div className="absolute inset-x-0 bottom-0 p-5">
-        <p className="text-[0.6875rem] font-semibold uppercase tracking-widest text-[var(--color-on-inverted)]/70">
-          {item.jarCount > 1 ? `Bundle · ${item.jarCount} jars` : "Dessert jar"}
-        </p>
-        <h3 className="mt-1 text-xl text-[var(--color-on-inverted)]">
-          {item.name.replace(" Dessert Jar", "")}
-        </h3>
-        <p className="mt-2 text-sm font-semibold text-[var(--color-on-inverted)]">
-          £{(item.price / 100).toFixed(2)}
-        </p>
+      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
+        <div>
+          <p className="text-[0.6875rem] font-semibold uppercase tracking-widest text-[var(--color-on-inverted)]/70">
+            {item.jarCount > 1 ? `Bundle · ${item.jarCount} jars` : "Dessert jar"}
+          </p>
+          <h3 className="mt-1 text-xl text-[var(--color-on-inverted)]">
+            {item.name.replace(" Dessert Jar", "")}
+          </h3>
+          <p className="mt-2 text-sm font-semibold text-[var(--color-on-inverted)]">
+            £{(item.price / 100).toFixed(2)}
+          </p>
+        </div>
+        <AddToCartButton id={id} />
       </div>
     </article>
   );

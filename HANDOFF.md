@@ -8,8 +8,10 @@ snapshot; `PROGRESS_LOG.md` next to this file has the chronological history of *
 
 Migrating Leemah Cakes N More (a Chelmsford, UK dessert-jar/celebration-cake business) from a static
 HTML site (Netlify Functions + Stripe + Netlify Blobs, archived at `legacy-static/`) to a Next.js app on
-Vercel, backed by Supabase. Working branch: `vercel-nextjs-migration`. Not merged to `main` yet — `main`
-is still the old static site's last commit.
+Vercel, backed by Supabase. Working branch: **`vercel-nextjs-migration`**, pushed to
+`origin` (github.com/Halimat92/testing) — not merged to `main` yet, `main` is still the old static site.
+`SETUP.md` at repo root is the non-technical guide for the business owner to connect her own Supabase,
+Stripe, and Vercel accounts — send her that file, not this one.
 
 ## Tech stack (verify against package.json — Next.js ships breaking changes fast)
 
@@ -59,25 +61,26 @@ chromatic accent (`--color-rouge`, used sparingly — CTAs/prices/small accents 
 color), gold as a metallic accent only, warm cream canvas, Newsreader + Manrope, full pill buttons,
 16px card radius, named surface hierarchy (canvas/card/raised/inverted), borders over shadows.
 
-## Critical gap — read this before doing anything else
+## Cart + checkout flow — now built
 
-**There is no cart or checkout UI.** `/api/checkout` exists and works, but nothing on the site calls it.
-The shop page (`/shop`) renders product cards with no "add to cart" button, there's no cart
-drawer/page/state (no Zustand or similar), and there's no page that collects the customer
-name/email/phone/address/allergen-acknowledgment/coupon-code fields that `create-checkout`'s payload
-shape requires (see `src/app/api/checkout/route.ts`'s `CheckoutPayload` type for the exact shape it
-expects). **This is the single most important missing piece** — without it, the site cannot take an
-order at all. Everything else (design polish, more pages, admin features) is secondary to this.
+`src/lib/cart-store.ts` (Zustand, `persist`-backed to localStorage) + `src/components/add-to-cart-button.tsx`
++ `src/components/cart-drawer.tsx` (in the nav, replaced the old static "Order now" pill) + `/checkout`
+page (`src/app/checkout/checkout-form.tsx`) collecting name/email/phone/fulfilment/address/allergen
+acknowledgment/coupon, calling `/api/checkout`, redirecting to the returned Stripe session URL.
+Functionally verified via DOM inspection (add to cart, drawer quantity/remove, checkout page order-summary
+math, delivery-fee toggle) — not yet verified through an actual live Stripe payment, since no Stripe keys
+are configured yet (see Blockers below).
 
 ## Other known gaps, roughly in priority order
 
-1. **Cart + checkout flow** (see above — genuinely blocking).
-2. **No Supabase project exists yet** — blocks testing the whole money path end-to-end (checkout →
-   webhook → order write → tracking) and the admin login. Waiting on the business owner's sister to
-   create one and share the project URL + anon key + service role key. Once it exists: run
-   `supabase/migrations/0001_init.sql`, create an admin user via Supabase Auth, fill in `.env.local` from
-   `.env.example`.
-3. **No live/test Stripe keys wired in** — same blocker, needed alongside Supabase to test payment.
+1. **No Supabase project exists yet** — blocks testing the whole money path end-to-end (checkout →
+   webhook → order write → tracking) and the admin login. `SETUP.md` walks the business owner through
+   creating one. Once it exists: run `supabase/migrations/0001_init.sql`, create an admin user via
+   Supabase Auth, fill in `.env.local`/Vercel env vars from `.env.example`.
+2. **No live/test Stripe keys wired in** — same blocker, needed alongside Supabase to test payment.
+   `SETUP.md` covers this too.
+3. **Not deployed to Vercel yet** — branch is pushed to GitHub (`vercel-nextjs-migration`) but no Vercel
+   project has been created/linked. `SETUP.md` covers importing the repo and choosing this branch.
 4. **Natasha's Law compliance** — UK law requires full ingredient/allergen info shown *before* purchase
    for prepacked-for-direct-sale food, not just an acknowledgment checkbox (which is all the legacy site
    had, and all this rebuild has ported so far). Needs real per-flavour ingredient lists from the
@@ -87,7 +90,7 @@ order at all. Everything else (design polish, more pages, admin features) is sec
    The cancellation policy text exists (`SITE.cancellationPolicy` in `site-info.ts`) but isn't
    surfaced as its own page anywhere yet.
 7. **No analytics** — the legacy site fired GA4 `purchase`, Meta Pixel `Purchase`, and Clarity events on
-   the thank-you page. Not ported. Low priority until the cart/checkout flow exists to fire them from.
+   the thank-you page. Not ported yet.
 8. **No rate limiting** on the public order-tracking endpoint (flagged as a `TODO` in the route file
    itself) — needs a KV/Redis provider (Upstash via Vercel Marketplace is the natural fit) before launch.
 9. **Mobile viewport was not visually verified this session** — the browser automation tool's
@@ -106,7 +109,9 @@ order at all. Everything else (design polish, more pages, admin features) is sec
 11. **Logo is placeholder-quality clip art** (`public/images/logo.jpeg`) — pre-existing hand-made branding,
     not AI-generated, but visually rough (bright inconsistent colors, amateur illustration). Flagged early
     in the project for a possible professional refresh; no decision made yet, not blocking.
-12. **Not deployed anywhere** — still local dev only. No Vercel project linked, no domain.
+12. **No test/admin credentials exist anywhere in this repo, on purpose.** Admin login is real Supabase
+    Auth — the business owner creates her own login directly in the Supabase dashboard (see `SETUP.md`).
+    Nobody building this site should ever ask for or handle her password.
 
 ## Design direction — hard-won context, don't re-litigate without reading this
 

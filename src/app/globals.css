@@ -56,3 +56,17 @@
     font-weight: 500;
   }
 }
+
+@layer components {
+  .input-field {
+    border-radius: 10px;
+    border: 1px solid var(--color-border);
+    background: var(--surface-card);
+    padding: 0.625rem 0.75rem;
+  }
+
+  .input-field:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-rouge);
+  }
+}

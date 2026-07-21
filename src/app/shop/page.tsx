@@ -28,7 +28,7 @@ export default function ShopPage() {
         <section className="mx-auto max-w-[1280px] px-6 pb-20">
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
             {entries.map(([id, item]) => (
-              <ProductCard key={id} item={item} />
+              <ProductCard key={id} id={id} item={item} />
             ))}
           </div>
         </section>

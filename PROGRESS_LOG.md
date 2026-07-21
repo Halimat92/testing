@@ -119,3 +119,44 @@ for other agents to pick up from.
 - Wrote `HANDOFF.md` (current-state audit + prioritized gap list) and this file. Flagged the single
   biggest remaining gap clearly in `HANDOFF.md`: **there is no cart or checkout UI** — `/api/checkout`
   works but nothing calls it yet. That's the next priority over further design polish.
+
+## 2026-07-21 — Session 5: Pushed the branch, built cart/checkout, wrote the setup guide
+
+User caught something important: this branch had never actually been pushed to GitHub. All four prior
+sessions' work existed only on the local machine — from the business owner's side, on GitHub, no side
+branch was visible at all, so "work on the original repo as a side branch" hadn't actually been fulfilled
+yet despite the branch existing locally. Pushed `vercel-nextjs-migration` to `origin` immediately
+(`git push -u origin vercel-nextjs-migration`) — it now exists at
+github.com/Halimat92/testing/tree/vercel-nextjs-migration. **Lesson: "create a branch" and "push a
+branch" are not the same thing — verify `git branch -a` shows a `remotes/origin/...` entry, not just the
+local branch, before claiming work is on "the repo" in any shared sense.**
+
+Also built the cart/checkout flow flagged as the top-priority gap in the previous session:
+- `src/lib/cart-store.ts` — Zustand store with `persist` (localStorage), plus a `getCartTotals` helper.
+- `src/components/add-to-cart-button.tsx` on each product card, `src/components/cart-drawer.tsx` in the
+  nav (replaced the static "Order now" pill — cart icon/count is more standard e-commerce UX and removes
+  another static all-pages-always element).
+- `/checkout` page (`src/app/checkout/checkout-form.tsx`): collects name/email/phone, fulfilment
+  (pickup/delivery toggle), address fields (conditional on delivery), order note, coupon code, allergen
+  acknowledgment checkbox; posts to `/api/checkout`; redirects to the returned Stripe session URL.
+  Client-side minimum-2-jars and allergen-checkbox guards mirror the server-side ones in the API route
+  (server-side remains the actual source of truth — client checks are just UX, not validation).
+- Verified functionally via direct DOM/JS inspection rather than screenshots (the browser tool's
+  screenshot capture was unreliable again this session — see below): added multiple items across two
+  products, confirmed the cart drawer showed correct lines/quantities, confirmed the checkout page's order
+  summary math was correct (subtotal, delivery fee toggling on when switching to delivery, total), and
+  confirmed the delivery fulfilment toggle correctly revealed address fields. Could not verify an actual
+  live Stripe redirect — no Stripe keys configured yet, expected until `SETUP.md` is completed.
+- Wrote `SETUP.md` — a non-technical, step-by-step guide for the business owner (or whoever sets up the
+  accounts) covering Supabase project creation + running the migration + creating her own admin login,
+  Stripe test keys + webhook setup, and Vercel import + environment variables + redeploy. Deliberately
+  has her create her own Supabase Auth login herself (Authentication → Users → Add user) rather than
+  anyone else setting a password for her — nobody building this site should ever see or handle that
+  credential. Updated `HANDOFF.md` to point at `SETUP.md` for the human-facing setup flow and to mark the
+  cart/checkout gap as resolved.
+- Browser tool reliability note for future sessions: `resize_window` and `screenshot` both had repeated
+  failures this session (resize not actually changing `window.innerWidth`; screenshot timing out or
+  silently returning a stale/blank capture despite the DOM being fully rendered, confirmed via direct
+  `getBoundingClientRect`/`elementFromPoint` checks). When screenshots seem to show a missing image or a
+  frozen page, verify against the DOM/network layer before concluding it's a real site bug — it has been
+  a tool artifact every time this session, not an actual defect, whenever checked.

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { MobileNav } from "@/components/mobile-nav";
+import { CartDrawer } from "@/components/cart-drawer";
 
 const LINKS = [
   { href: "/shop", label: "Shop" },
@@ -39,12 +40,7 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/shop"
-            className="rounded-[var(--radius-pill)] bg-[var(--color-ink)] px-5 py-2 text-sm font-semibold text-[var(--color-on-inverted)]"
-          >
-            Order now
-          </Link>
+          <CartDrawer />
           <MobileNav links={LINKS} />
         </div>
       </div>
