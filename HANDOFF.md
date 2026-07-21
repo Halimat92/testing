@@ -49,8 +49,9 @@ WhatsApp/Instagram/TikTok, FSA hygiene rating link, the 3 real customer testimon
   `TODO` for rate limiting (no KV/Redis provisioned yet).
 
 **Database**: `supabase/migrations/0001_init.sql` — `orders` + `coupon_redemptions` tables, RLS enabled
-with **no policies** (everything goes through the service-role client, by design). **Not yet applied to
-any real Supabase project** — no project exists yet (see Blockers below).
+with **no policies** (everything goes through the service-role client, by design). A real Supabase project
+now exists; the migration has been applied and the `orders` table was reached successfully with the
+service-role client on 2026-07-21. Local credentials live only in gitignored `.env.local`.
 
 **Admin**: `/admin/login` (Supabase Auth email/password) + `/admin/orders` (list + status-update Server
 Action), gated by `proxy.ts`. This replaces the legacy site's shared-secret-token approach
@@ -73,14 +74,17 @@ are configured yet (see Blockers below).
 
 ## Other known gaps, roughly in priority order
 
-1. **No Supabase project exists yet** — blocks testing the whole money path end-to-end (checkout →
-   webhook → order write → tracking) and the admin login. `SETUP.md` walks the business owner through
-   creating one. Once it exists: run `supabase/migrations/0001_init.sql`, create an admin user via
-   Supabase Auth, fill in `.env.local`/Vercel env vars from `.env.example`.
+1. **Supabase exists and is connected locally, but the full money path is not tested yet** — the
+   migration is applied, the empty `orders` table is reachable, and the owner email is in the local
+   `ADMIN_EMAILS` allowlist. Admin browser login, webhook order creation, tracking, and Vercel environment
+   variables still need verification. No Supabase secret is committed to Git.
 2. **No live/test Stripe keys wired in** — same blocker, needed alongside Supabase to test payment.
    `SETUP.md` covers this too.
 3. **Not deployed to Vercel yet** — branch is pushed to GitHub (`vercel-nextjs-migration`) but no Vercel
-   project has been created/linked. `SETUP.md` covers importing the repo and choosing this branch.
+   project has been created/linked. The owner's New Project screen shows `main`, which is Vercel's normal
+   default. Remediation is complete and the branch is awaiting the controlled `main` update; do not deploy
+   yet. Once the migration is merged to `main`, import the project and set the required environment
+   variables, but wait for explicit approval before clicking Deploy.
 4. **Natasha's Law compliance** — UK law requires full ingredient/allergen info shown *before* purchase
    for prepacked-for-direct-sale food, not just an acknowledgment checkbox (which is all the legacy site
    had, and all this rebuild has ported so far). Needs real per-flavour ingredient lists from the
@@ -93,14 +97,11 @@ are configured yet (see Blockers below).
    the thank-you page. Not ported yet.
 8. **No rate limiting** on the public order-tracking endpoint (flagged as a `TODO` in the route file
    itself) — needs a KV/Redis provider (Upstash via Vercel Marketplace is the natural fit) before launch.
-9. **Mobile viewport was not visually verified this session** — the browser automation tool's
-   `resize_window` call reported success but `window.innerWidth` never actually changed (confirmed via
-   direct JS check), so no real mobile screenshot was taken. A static-analysis pass found no fixed pixel
-   widths that would force horizontal overflow (all `w-[...]` usages are `max-w-[1280px]` caps, not
-   floors), and one confirmed-by-code-reading bug was found and fixed: the nav had no mobile menu at all
-   below the `md` breakpoint (5 of 6 nav links were completely unreachable on phone). A fresh mobile
-   device/emulator check is still worth doing before shipping — don't assume the fix is pixel-perfect
-   just because it compiles.
+9. **Mobile was independently rendered and the reported failures were fixed** — Codex captured every
+   customer page at 375/390/768/1024 and reproduced the clipped fixed overlays and cramped product cards.
+   The remediation pass moved the overlays into body-level portals, added dialog behavior, stacked narrow
+   product-card controls, and moved the desktop-nav breakpoint to `lg`. The fixes were verified in-browser;
+   one final real-device smoke test remains advisable before launch.
 10. **Admin scope was deliberately limited** — no product CRUD (catalogue stays in `catalogue.ts` code
     for now; 8 stable SKUs don't need a CMS), no CSV import, no collections/banners, no variant system.
     These exist in the `iby_closet` reference project because it's a multi-hundred-SKU fashion catalogue
@@ -109,9 +110,10 @@ are configured yet (see Blockers below).
 11. **Logo is placeholder-quality clip art** (`public/images/logo.jpeg`) — pre-existing hand-made branding,
     not AI-generated, but visually rough (bright inconsistent colors, amateur illustration). Flagged early
     in the project for a possible professional refresh; no decision made yet, not blocking.
-12. **No test/admin credentials exist anywhere in this repo, on purpose.** Admin login is real Supabase
-    Auth — the business owner creates her own login directly in the Supabase dashboard (see `SETUP.md`).
-    Nobody building this site should ever ask for or handle her password.
+12. **No password or Supabase secret is committed to the repo.** The owner has created the Supabase
+    project and supplied the admin email; local values are in gitignored `.env.local`. Admin login uses
+    Supabase Auth, and nobody building this site should ask for or handle her password. The service-role
+    key was shared through chat during setup and should be rotated before production deployment.
 
 ## Design direction — hard-won context, don't re-litigate without reading this
 

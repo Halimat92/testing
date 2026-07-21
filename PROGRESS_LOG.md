@@ -290,3 +290,29 @@ high-confidence issues and verified the headline one in-browser.
 - Rate limiting on tracking/checkout — still needs a KV/Redis provider (Upstash via Vercel Marketplace).
 - Content Security Policy header — not added yet (needs per-page nonce work for inline styles).
 - The 14MB `output/` audit-artifact folder is now gitignored (kept locally, not committed).
+
+## 2026-07-21 21:08 WAT — Session 7: SQL repair, live Supabase connection, and Vercel handoff
+
+- Rechecked `supabase/migrations/0001_init.sql` using an in-process PostgreSQL-compatible database. The
+  original migration parsed and ran on both a fresh database and a second run; the concrete Supabase
+  advisor issue was the trigger function's mutable search path rather than a SQL syntax failure.
+- Updated the migration to schema-qualify `public.orders`, `public.coupon_redemptions`, their indexes,
+  RLS statements, trigger, and function. Pinned `public.set_updated_at()` to `search_path = ''` to prevent
+  object-shadowing warnings. Re-ran the entire migration twice successfully after the change.
+- Received the business-owned Supabase project URL, public key, and service-role key. Stored them only in
+  gitignored `.env.local`; no credential was added to source control, `PROGRESS_LOG.md`, or `HANDOFF.md`.
+- Verified the real project over HTTPS: the server-role client reached the `orders` table successfully,
+  the table currently contains zero rows, and the public client could make an RLS-filtered request.
+- Added the confirmed Supabase Auth owner email to the local `ADMIN_EMAILS` allowlist. No password was
+  requested or handled. Admin sign-in itself has not yet been tested in a browser.
+- Confirmed that this makes the local application Supabase-connected, not the live Vercel deployment.
+  Vercel has not been linked or deployed from this machine, and no Vercel account state was changed.
+- Reviewed the owner's Vercel New Project screenshot. It shows `main` because Vercel selects `main` for a
+  newly imported Git project by default; that pre-deployment screen does not provide the production-branch
+  control. Remediation is now complete and awaiting the controlled `main` update; until `main` carries the
+  migration the owner should leave that screen without clicking Deploy. Once the migration is merged to
+  `main`, import the project (or point an existing one's production branch at `main`), set the required
+  environment variables, and wait for explicit approval before deploying.
+- Security follow-up: the service-role key was shared through WhatsApp/chat during setup. Rotate it in
+  Supabase before production, then update both local `.env.local` and Vercel's sensitive environment
+  variable. Never paste the replacement into repository files or progress logs.
