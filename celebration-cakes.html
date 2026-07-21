@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Leemah Cakes N More | Handmade Dessert Jars & Custom Cakes</title>
-  <meta name="description" content="Handmade dessert jars, bundles and custom cakes from Leemah Cakes N More in Chelmsford." />
+  <title>Celebration Cake Inspiration | Leemah Cakes N More</title>
+  <meta name="description" content="Custom celebration cakes from Leemah Cakes N More, starting from ?75." />
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-FN21MYL37T"></script>
@@ -212,9 +212,8 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 22px;
       font-weight: 700;
-      line-height: .95;
+      line-height: .9;
       color: var(--black);
-      white-space: nowrap;
     }
 
     .lc-logo-text span { color: var(--pink); }
@@ -224,8 +223,7 @@
       font-size: 10px;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: .18em;
-      white-space: nowrap;
+      letter-spacing: .22em;
     }
 
     .desktop-nav {
@@ -406,7 +404,7 @@
       position: relative;
       overflow: hidden;
       background:
-        linear-gradient(90deg, rgba(255,249,246,.98) 0%, rgba(255,249,246,.94) 46%, rgba(252,231,238,.78) 100%);
+        linear-gradient(90deg, rgba(255,249,246,.98) 0%, rgba(255,249,246,.9) 42%, rgba(252,231,238,.7) 100%);
       color: var(--black);
     }
 
@@ -420,42 +418,17 @@
       left: 50%;
       top: -260px;
       transform: translateX(-50%);
-      pointer-events: none;
     }
 
-    .hero-carousel {
+    .hero-inner {
       position: relative;
       max-width: 1180px;
       margin: 0 auto;
-      padding: 58px 20px 72px;
-    }
-
-    .hero-track {
-      position: relative;
-      min-height: 520px;
-    }
-
-    .hero-slide {
-      position: absolute;
-      inset: 0;
+      padding: 76px 20px 90px;
       display: grid;
-      grid-template-columns: 1.02fr .98fr;
+      grid-template-columns: 1.05fr .95fr;
       gap: 46px;
       align-items: center;
-      opacity: 0;
-      pointer-events: none;
-      transform: translateX(28px);
-      transition: opacity .45s ease, transform .45s ease;
-    }
-
-    .hero-slide.active {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateX(0);
-    }
-
-    .hero-copy {
-      max-width: 560px;
     }
 
     .eyebrow {
@@ -476,9 +449,9 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(42px, 5.8vw, 68px);
-      line-height: 1;
-      letter-spacing: 0;
+      font-size: clamp(48px, 7vw, 82px);
+      line-height: .93;
+      letter-spacing: -1.4px;
     }
 
     .hero p {
@@ -497,14 +470,8 @@
     }
 
     .hero .btn-outline {
-      color: var(--black);
-      border-color: rgba(31,27,26,.32);
-      background: rgba(255,255,255,.72);
-    }
-
-    .hero .btn-outline:hover {
-      border-color: var(--pink);
-      color: var(--pink);
+      color: white;
+      border-color: rgba(255,255,255,.25);
     }
 
     .hero-stats {
@@ -516,140 +483,77 @@
     }
 
     .hero-stat {
-      border-top: 1px solid rgba(200,169,106,.35);
-      padding: 15px 0 0;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.06);
+      border-radius: 24px;
+      padding: 17px;
     }
 
     .hero-stat strong {
       display: block;
       font-family: 'Cormorant Garamond', serif;
       font-size: 30px;
-      color: var(--black);
+      color: white;
     }
 
     .hero-stat span {
       display: block;
       margin-top: 2px;
-      color: var(--muted);
+      color: rgba(255,255,255,.55);
       font-size: 12px;
     }
 
     .hero-card {
-      border: 1px solid rgba(200,169,106,.24);
-      background: linear-gradient(145deg, rgba(255,255,255,.78), rgba(255,240,246,.7));
-      padding: 12px;
-      border-radius: 8px;
-      box-shadow: 0 24px 70px rgba(90,36,57,.14);
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.08);
+      padding: 16px;
+      border-radius: 42px;
+      box-shadow: 0 28px 80px rgba(0,0,0,.28);
     }
 
     .hero-card-inner {
-      background: #fff;
+      background: var(--cream);
       color: var(--black);
-      border-radius: 8px;
-      overflow: hidden;
+      border-radius: 34px;
+      padding: 16px;
     }
 
-    .hero-image {
-      width: 100%;
-      height: min(52vw, 500px);
-      min-height: 410px;
-      display: block;
-      object-fit: cover;
-      object-position: center;
-    }
-
-    .hero-image.cake-focus {
-      object-position: center 42%;
-    }
-
-    .hero-image.luxury-focus {
-      object-position: center 28%;
-    }
-
-    .hero-text-panel {
-      min-height: min(52vw, 500px);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 16px;
-      padding: 42px;
-      border: 1px solid rgba(200,169,106,.26);
-      border-radius: 8px;
-      background:
-        linear-gradient(135deg, rgba(31,27,26,.96), rgba(82,42,55,.92)),
-        var(--black);
-      color: white;
-    }
-
-    .hero-text-panel strong {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(36px, 4.6vw, 58px);
-      line-height: 1;
-      font-weight: 700;
-    }
-
-    .hero-text-panel span {
-      color: rgba(255,255,255,.78);
-      line-height: 1.65;
-      max-width: 440px;
-    }
-
-    .hero-controls {
-      position: absolute;
-      inset: 0;
+    .hero-card-info {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      pointer-events: none;
-      padding: 0 2px;
+      gap: 16px;
+      margin-top: 18px;
     }
 
-    .hero-arrow {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      border: 1px solid rgba(31,27,26,.16);
-      background: rgba(255,255,255,.88);
-      color: var(--black);
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      pointer-events: auto;
-      box-shadow: 0 10px 25px rgba(31,27,26,.10);
-      transition: .2s ease;
+    .hero-card-info h3 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1;
     }
 
-    .hero-arrow:hover,
-    .hero-arrow:focus-visible {
-      background: var(--pink);
+    .hero-card-info p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .price-pill {
+      background: var(--black);
       color: white;
-      outline: none;
+      border-radius: 18px;
+      padding: 12px 15px;
+      text-align: right;
+      white-space: nowrap;
     }
 
-    .hero-dots {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 22px;
+    .price-pill small {
+      display: block;
+      color: rgba(255,255,255,.6);
     }
 
-    .hero-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      border: 0;
-      background: rgba(31,27,26,.18);
-      cursor: pointer;
-      padding: 0;
-      transition: .2s ease;
-    }
-
-    .hero-dot.active {
-      width: 24px;
-      border-radius: 999px;
-      background: var(--pink);
-    }
+    .price-pill strong { font-size: 22px; }
 
     .trust {
       background: white;
@@ -735,57 +639,15 @@
 
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    body.home-page .product-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    body.home-page #product-grid .product-card {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    body.home-page #product-grid .jar-stage,
-    body.home-page #product-grid .bundle-image-wrap {
-      height: auto;
-      min-height: 0;
-      aspect-ratio: 1 / 1;
-      border-radius: 8px 8px 0 0;
-      background: transparent !important;
-    }
-
-    body.home-page #product-grid .jar-stage::after {
-      display: none;
-    }
-
-    body.home-page #product-grid .jar-photo-wrap {
-      padding: 0;
-      background: transparent;
-    }
-
-    body.home-page #product-grid .jar-photo,
-    body.home-page #product-grid .bundle-image {
-      width: 100% !important;
-      height: 100% !important;
-      max-width: none;
-      max-height: none;
-      padding: 0;
-      object-fit: cover !important;
-      object-position: center center !important;
-      display: block;
-      filter: none;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
     }
 
     .product-card {
       background: white;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 0;
-      overflow: hidden;
+      border-radius: 34px;
+      padding: 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,.035);
       transition: .25s ease;
     }
@@ -795,22 +657,14 @@
       box-shadow: 0 26px 60px rgba(233,30,99,.12);
     }
 
-    .product-body { padding: 13px 12px 12px; }
-
-    body.home-page #product-grid .product-body {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-      gap: 9px;
-      padding: 12px;
-    }
+    .product-body { padding: 18px 8px 8px; }
 
     .product-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .tag {
@@ -866,18 +720,8 @@
 
     .product-body h3 {
       margin: 0;
-      font-size: 21px;
+      font-size: 29px;
       line-height: 1;
-    }
-
-    body.home-page #product-grid .product-body h3 {
-      font-size: 18px;
-      line-height: 1.08;
-    }
-
-    body.home-page #product-grid .product-proof {
-      margin: 0;
-      min-height: 18px;
     }
 
     .subtitle {
@@ -888,7 +732,7 @@
     }
 
     .desc {
-      min-height: 0;
+      min-height: 92px;
       margin: 14px 0 0;
       color: var(--muted);
       font-size: 14px;
@@ -903,56 +747,29 @@
       margin-top: 18px;
     }
 
-    body.home-page #product-grid .product-bottom {
-      display: block;
-      margin-top: auto;
-    }
-
-    body.home-page #product-grid .product-bottom .btn {
-      width: 100%;
-      margin-top: 4px;
-      padding: 12px 14px;
-    }
-
     .price small {
       color: var(--muted);
       display: block;
       font-size: 12px;
     }
 
-    .price strong { font-size: 22px; }
-
-    body.home-page #product-grid .price strong {
-      font-size: 21px;
-    }
-
-    .home-featured-card .bundle-image-wrap {
-      min-height: 0;
-      background: transparent;
-    }
-
-    .home-featured-card .bundle-image {
-      max-height: none;
-      padding: 0;
-    }
+    .price strong { font-size: 26px; }
 
     .jar-stage {
       position: relative;
-      height: 285px;
-      border-radius: 8px;
+      height: 288px;
+      border-radius: 28px;
       overflow: hidden;
       display: grid;
       place-items: center;
-      background: #fff;
     }
 
     .jar-stage::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: none;
+      background: linear-gradient(to top, rgba(0,0,0,.25), transparent 55%, rgba(255,255,255,.12));
       pointer-events: none;
-      display: none;
     }
 
     .jar-stage-compact {
@@ -962,6 +779,22 @@
       flex: 0 0 112px;
     }
 
+    .jar-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 5;
+      background: rgba(255,255,255,.94);
+      color: var(--pink);
+      font-size: 12px;
+      font-weight: 850;
+      border-radius: 999px;
+      padding: 6px 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,.08);
+    }
+
+    .jar-stage-compact .jar-badge { display: none; }
+
     .jar-photo-wrap {
       position: relative;
       z-index: 4;
@@ -969,20 +802,17 @@
       height: 100%;
       display: grid;
       place-items: center;
-      padding: 8px;
+      padding: 16px;
     }
 
     .jar-stage-compact .jar-photo-wrap { padding: 10px; }
 
     .jar-photo {
-      width: 100%;
-      height: 100%;
-      max-width: 100%;
-      max-height: 100%;
+      max-width: 90%;
+      max-height: 90%;
       object-fit: contain;
-      object-position: center;
       display: block;
-      filter: none;
+      filter: drop-shadow(0 18px 26px rgba(0,0,0,.24));
     }
 
     .jar-stage-compact .jar-photo {
@@ -1139,7 +969,7 @@
       .slider-arrow {
         width: 26px;
         height: 38px;
-        font-size: 21px;
+        font-size: 24px;
       }
       .slider-arrow-right {
         right: 6px;
@@ -1148,19 +978,6 @@
         left: 6px;
       }
     }
-
-    .product-card .jar-photo,
-    .product-card .slide .jar-photo {
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: contain !important;
-      object-position: center center !important;
-    }
-
-    .product-card .jar-photo-wrap {
-      background: #fff;
-    }
-
     .info-slide-card {
       width: calc(100% - 34px);
       min-height: 212px;
@@ -1430,7 +1247,7 @@
       background: white;
       border: 1px dashed rgba(232,25,122,.35);
       border-radius: 24px;
-      padding: 12px;
+      padding: 18px;
       color: var(--muted);
       line-height: 1.6;
     }
@@ -1575,16 +1392,16 @@
     .about-baker-inner {
       max-width: 1180px;
       margin: 0 auto;
-      padding: 44px 20px;
+      padding: 74px 20px;
       display: grid;
-      grid-template-columns: 190px 1fr;
-      gap: 24px;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 56px;
       align-items: center;
     }
 
     .baker-image-card {
-      min-height: 190px;
-      border-radius: 8px;
+      min-height: 440px;
+      border-radius: 46px;
       background: #F9DCE9;
       display: grid;
       place-items: center;
@@ -1596,7 +1413,7 @@
     .baker-image-card img {
       width: 100%;
       height: 100%;
-      min-height: 190px;
+      min-height: 440px;
       display: block;
       object-fit: cover;
       object-position: center;
@@ -1619,48 +1436,9 @@
 
     .about-baker-content p {
       color: var(--muted);
-      font-size: 16px;
-      line-height: 1.65;
-      margin: 14px 0 0;
-    }
-
-    .cake-inspiration {
-      background: linear-gradient(180deg, #fff 0%, var(--cream) 100%);
-    }
-
-    .cake-cta-section .section-head {
-      align-items: center;
-      background: linear-gradient(135deg, rgba(255,249,246,.96), rgba(255,233,242,.86));
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 34px;
-      margin-bottom: 0;
-    }
-
-    .custom-cake-text-panel {
-      min-height: 360px;
-      border-radius: 8px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02)),
-        var(--black);
-      border: 1px solid rgba(255,255,255,.14);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 14px;
-      padding: 34px;
-    }
-
-    .custom-cake-text-panel strong {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(34px, 4vw, 52px);
-      line-height: 1;
-    }
-
-    .custom-cake-text-panel span {
-      color: rgba(255,255,255,.74);
-      line-height: 1.7;
+      font-size: 17px;
+      line-height: 1.85;
+      margin: 22px 0 0;
     }
 
     .delivery-info-section {
@@ -1679,7 +1457,7 @@
     .delivery-info-card {
       background: white;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 28px;
       padding: 24px;
       display: flex;
       gap: 18px;
@@ -1733,16 +1511,106 @@
       .notify-form { grid-template-columns: 1fr; }
       .about-baker-inner { padding: 54px 16px; gap: 32px; }
       .baker-image-card, .baker-image-card img { min-height: 330px; }
-      body.home-page .about-baker-inner { padding: 36px 16px; gap: 18px; }
-      body.home-page .baker-image-card,
-      body.home-page .baker-image-card img {
-        min-height: 180px;
-        max-height: 210px;
-      }
-      body.home-page .about-baker-content h2 { font-size: 34px; }
-      body.home-page .about-baker-content p { line-height: 1.55; }
       .delivery-info-section { padding: 42px 16px; }
       .delivery-info-card { padding: 20px; }
+    }
+
+    .celebration-page-hero {
+      background: linear-gradient(135deg, var(--cream), #FDE8F1);
+      padding: 78px 20px 46px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .celebration-page-inner {
+      max-width: 880px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .celebration-page-inner h1 {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .celebration-page-inner p:last-child {
+      max-width: 680px;
+      margin: 18px auto 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+    }
+
+    .celebration-gallery-section {
+      padding-top: 46px;
+    }
+
+    .celebration-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .celebration-gallery-card {
+      margin: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 18px 45px rgba(31,27,26,.08);
+      aspect-ratio: 4 / 5;
+    }
+
+    .celebration-gallery-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .celebration-gallery-cta {
+      display: flex;
+      justify-content: center;
+      margin-top: 28px;
+    }
+
+    @media (max-width: 900px) {
+      .celebration-gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .celebration-page-hero {
+        padding: 48px 16px 32px;
+      }
+
+      .celebration-page-inner h1 {
+        font-size: 36px;
+      }
+
+      .celebration-page-inner p:last-child {
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      .celebration-gallery-section {
+        padding: 34px 16px 104px;
+      }
+
+      .celebration-gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+
+      .celebration-gallery-card {
+        aspect-ratio: 1 / 1.05;
+      }
+
+      .celebration-gallery-cta .btn {
+        width: 100%;
+        min-height: 46px;
+      }
     }
 
     /* CUSTOM CAKE ADVERT */
@@ -1832,13 +1700,55 @@
       line-height: 1;
     }
 
+    .custom-social-panel {
+      margin: 0 0 28px;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.13);
+    }
 
-    .custom-social-panel { margin: 0 0 28px; padding: 18px; border-radius: 22px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.13); }
-    .custom-social-panel strong { display: block; color: white; font-size: 15px; margin-bottom: 6px; }
-    .custom-social-panel p { margin: 0; color: rgba(255,255,255,.68); font-size: 14px; line-height: 1.6; }
-    .custom-social-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-    .custom-social-links a { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 14px; border-radius: 999px; color: white; text-decoration: none; font-size: 13px; font-weight: 800; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.08); }
-    .custom-social-links a:hover { border-color: rgba(233,30,99,.6); background: rgba(233,30,99,.2); }
+    .custom-social-panel strong {
+      display: block;
+      color: white;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+
+    .custom-social-panel p {
+      margin: 0;
+      color: rgba(255,255,255,.68);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .custom-social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .custom-social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 42px;
+      padding: 0 14px;
+      border-radius: 999px;
+      color: white;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+    }
+
+    .custom-social-links a:hover {
+      border-color: rgba(233,30,99,.6);
+      background: rgba(233,30,99,.2);
+    }
+
     /* CHECKOUT OPTIONS */
     .checkout-option-grid { display: grid; gap: 10px; margin: 16px 0 8px; }
     .fulfilment-option {
@@ -1915,7 +1825,7 @@
     .step {
       background: white;
       border-radius: 26px;
-      padding: 12px;
+      padding: 18px;
       display: flex;
       gap: 14px;
       box-shadow: 0 8px 20px rgba(0,0,0,.04);
@@ -2276,7 +2186,7 @@
 
     .mobile-links a {
       background: var(--blush);
-      padding: 0;
+      padding: 16px;
       border-radius: 18px;
       color: var(--black);
       text-decoration: none;
@@ -2435,7 +2345,7 @@
       display: flex;
       justify-content: space-between;
       color: var(--muted);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .summary-row strong { color: var(--black); }
@@ -2454,7 +2364,7 @@
       border: 1px solid var(--border);
       background: white;
       border-radius: 26px;
-      padding: 12px;
+      padding: 18px;
       margin-top: 18px;
     }
 
@@ -2463,7 +2373,7 @@
       border: 1px solid var(--border);
       background: #FAFAFA;
       border-radius: 18px;
-      padding: 0;
+      padding: 16px;
       color: #999;
       font-family: monospace;
       font-size: 13px;
@@ -2500,26 +2410,8 @@
       .header-actions .hygiene-badge,
       .header-actions .fsa-rating-widget { display: none; }
       .menu-btn { display: grid; }
-      .gift-inner, .footer-inner, .custom-cake-card, .bundle-hero { grid-template-columns: 1fr; }
-      .hero-carousel { padding: 28px 16px 44px; }
-      .hero-track { min-height: 620px; }
-      .hero-slide {
-        grid-template-columns: 1fr;
-        gap: 22px;
-        align-content: start;
-      }
-      .hero-media { order: -1; }
-      .hero-copy { max-width: none; }
-      .hero-image {
-        height: clamp(285px, 52vw, 420px);
-        min-height: 285px;
-      }
-      .hero-controls {
-        top: 150px;
-        bottom: auto;
-        height: 48px;
-        padding: 0 10px;
-      }
+      .hero-inner, .gift-inner, .footer-inner, .custom-cake-card, .bundle-hero { grid-template-columns: 1fr; }
+      .hero-inner { padding-top: 52px; }
       .trust-grid, .product-grid, .review-grid, .bundle-grid { grid-template-columns: 1fr 1fr; }
       .section-head {
         align-items: flex-start;
@@ -2530,132 +2422,27 @@
     @media (max-width: 640px) {
       .topbar { font-size: 11px; }
       .header-inner { padding: 13px 14px; }
-      body.home-page {
-        scroll-padding-bottom: 112px;
-      }
       .lc-logo-circle {
         width: 46px;
         height: 46px;
       }
       .lc-l, .lc-c { font-size: 33px; }
       .lc-logo-text { font-size: 19px; }
-      .hero-carousel { padding: 18px 14px 30px; }
-      .hero-track { min-height: 0; }
-      .hero-slide {
-        position: relative;
-        inset: auto;
-        display: none;
-        transform: none;
-        transition: opacity .35s ease;
+      .hero-inner {
+        padding: 42px 16px 64px;
+        gap: 32px;
       }
-      .hero-slide.active {
-        display: grid;
-        opacity: 1;
-        transform: none;
-      }
-      .eyebrow {
-        padding: 8px 12px;
-        font-size: 11px;
-        letter-spacing: .12em;
-        margin-bottom: 14px;
-      }
-      h1 { font-size: 34px; line-height: 1.02; }
-      .hero p {
-        font-size: 15px;
-        line-height: 1.55;
-        margin-top: 14px;
-      }
+      h1 { font-size: 48px; }
+      .hero p { font-size: 15px; }
       .hero-actions { flex-direction: column; }
-      .hero-actions .btn {
-        width: 100%;
-        min-height: 46px;
-        padding: 13px 16px;
-      }
-      .hero-stats { display: none; }
-      .hero-card { padding: 6px; }
-      .hero-image {
-        height: clamp(245px, 70vw, 300px);
-        min-height: 245px;
-      }
-      .hero-text-panel {
-        min-height: 245px;
-        padding: 24px;
-      }
-      .hero-text-panel strong {
-        font-size: 34px;
-      }
-      .hero-text-panel span {
-        font-size: 14px;
-        line-height: 1.5;
-      }
-      .hero-controls { top: 132px; padding: 0 8px; }
-      .hero-arrow { width: 42px; height: 42px; }
-      .hero-dots { margin-top: 16px; }
-      .cake-cta-section .section-head { padding: 24px 18px; }
-      .trust-grid, .review-grid, .bundle-grid { grid-template-columns: 1fr; }
-      .trust-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
-        padding: 12px 14px;
-      }
-      .trust-item {
-        min-height: 82px;
+      .hero-stats { grid-template-columns: 1fr; }
+      .hero-card-info {
         align-items: flex-start;
-        padding: 11px 9px;
-        gap: 8px;
-        border-radius: 8px;
+        flex-direction: column;
       }
-      .trust-icon {
-        width: 32px;
-        height: 32px;
-        flex-basis: 32px;
-        font-size: 15px;
-      }
-      .trust-item strong { font-size: 13px; }
-      .trust-item span { font-size: 11px; line-height: 1.35; }
-      body.home-page .product-grid {
-        display: grid;
-        grid-template-columns: none;
-        grid-auto-flow: column;
-        grid-auto-columns: minmax(252px, 76vw);
-        gap: 12px;
-        overflow-x: auto;
-        overscroll-behavior-inline: contain;
-        scroll-snap-type: inline mandatory;
-        padding: 0 2px 10px;
-        -webkit-overflow-scrolling: touch;
-      }
-      body.home-page #product-grid .product-card {
-        scroll-snap-align: start;
-        min-height: 0;
-      }
-      body.home-page #product-grid .jar-stage,
-      body.home-page #product-grid .bundle-image-wrap {
-        aspect-ratio: 1 / .92;
-      }
-      body.home-page #product-grid .product-body {
-        padding: 10px;
-        gap: 6px;
-      }
-      body.home-page #product-grid .product-body h3 {
-        font-size: 16px;
-      }
-      body.home-page #product-grid .rating-summary {
-        font-size: 12px;
-      }
-      body.home-page #product-grid .product-bottom .btn {
-        min-height: 44px;
-        margin-top: 2px;
-      }
+      .trust-grid, .product-grid, .review-grid, .bundle-grid { grid-template-columns: 1fr; }
+      .trust-grid { padding: 18px 16px; }
       .section, .gift-inner, .footer-inner, .custom-cake-card { padding: 54px 16px; }
-      body.home-page .section { padding: 44px 16px; }
-      body.home-page .section-head { gap: 14px; margin-bottom: 20px; }
-      body.home-page .section h2 { font-size: 34px; }
-      body.home-page .section-desc { margin-top: 10px; line-height: 1.55; }
-      .custom-cake-text-panel {
-        min-height: 220px;
-        padding: 24px;
-      }
       .bundle-hero { padding: 30px 22px; }
       .bundle-header { grid-template-rows: auto minmax(230px, 1fr); }
       .bundle-title-block { padding: 24px 24px 16px; }
@@ -2683,7 +2470,7 @@
         grid-template-columns: 1fr 1fr;
         gap: 8px;
       }
-      .footer { padding-bottom: 104px; }
+      .footer { padding-bottom: 80px; }
       .modal-backdrop {
         align-items: flex-end;
         padding: 0;
@@ -2771,7 +2558,7 @@
       max-width: calc(100vw - 32px);
       background: white;
       border: 1px solid var(--border);
-      border-radius: 8px;
+      border-radius: 28px;
       box-shadow: 0 24px 70px rgba(0,0,0,.24);
       overflow: hidden;
       display: none;
@@ -2784,7 +2571,7 @@
     .help-chatbot-head {
       background: var(--black);
       color: white;
-      padding: 12px;
+      padding: 18px;
       display: flex;
       justify-content: space-between;
       gap: 12px;
@@ -2816,7 +2603,7 @@
     }
 
     .help-chatbot-body {
-      padding: 0;
+      padding: 16px;
       max-height: 430px;
       overflow-y: auto;
     }
@@ -2829,7 +2616,7 @@
       color: #3A1A2A;
       font-size: 13px;
       line-height: 1.55;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .help-chatbot-options {
@@ -2901,7 +2688,7 @@
       .help-chatbot-button {
         width: 56px;
         height: 56px;
-        font-size: 21px;
+        font-size: 24px;
       }
 
       .help-chatbot-box {
@@ -2968,7 +2755,7 @@
   </style>
 </head>
 
-<body class="home-page">
+<body class="custom-page">
   <div class="site">
 <div class="topbar">
   <div class="topbar-track">
@@ -3042,181 +2829,31 @@
       </div>
     </div>
 
-    <main id="home">
-<section class="hero" aria-label="Leemah Cakes featured products">
-  <div class="hero-carousel" data-hero-carousel tabindex="0">
-    <div class="hero-track">
-      <article class="hero-slide active" data-hero-slide>
-        <div class="hero-copy">
-          <div class="eyebrow">Dessert Jars</div>
-          <h1>Dessert jars made for treating and gifting.</h1>
-          <p>Freshly layered dessert jars and gift boxes made with care in Chelmsford for birthdays, thank-yous, cosy nights and sweet surprises.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="shop.html">Shop Dessert Jars</a>
-          </div>
-          <div class="hero-stats">
-            <div class="hero-stat"><strong>Fresh</strong><span>Made to order</span></div>
-            <div class="hero-stat"><strong>Care</strong><span>Made with love</span></div>
-            <div class="hero-stat"><strong>Local</strong><span>Chelmsford based</span></div>
-          </div>
-        </div>
-        <div class="hero-media">
-          <div class="hero-card"><div class="hero-card-inner"><img class="hero-image" src="Images/hompage.PNG" alt="Dessert jar gift box by Leemah Cakes N More"></div></div>
-        </div>
-      </article>
-
-      <article class="hero-slide" data-hero-slide>
-        <div class="hero-copy">
-          <div class="eyebrow">Custom Cakes</div>
-          <h1>Bespoke cakes made for your moment.</h1>
-          <p>Order a custom cake designed around your date, serving size, flavour, colour palette and celebration style.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="custom-cakes.html">Get a Quote for a Custom Cake</a>
-          </div>
-        </div>
-        <div class="hero-media">
-          <div class="hero-card"><div class="hero-card-inner"><img class="hero-image cake-focus" src="Images/custom-cake.png" alt="Custom celebration cake by Leemah Cakes N More"></div></div>
-        </div>
-      </article>
-
-    </div>
-
-    <div class="hero-controls" aria-hidden="false">
-      <button class="hero-arrow" type="button" data-hero-prev aria-label="Previous slide"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
-      <button class="hero-arrow" type="button" data-hero-next aria-label="Next slide"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
-    </div>
-    <div class="hero-dots" role="tablist" aria-label="Hero slides">
-      <button class="hero-dot active" type="button" data-hero-dot="0" aria-label="Show dessert jars slide" aria-current="true"></button>
-      <button class="hero-dot" type="button" data-hero-dot="1" aria-label="Show custom cakes slide"></button>
-    </div>
-  </div>
-</section>
-<section class="trust"><div class="trust-grid"><div class="trust-item"><div class="trust-icon"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i></div><div><strong>Delivery</strong><span>Pickup or delivery</span></div></div><div class="trust-item"><div class="trust-icon"><i class="fa-solid fa-star" aria-hidden="true"></i></div><div><strong>Food Safety</strong><span>5-star food hygiene rating awarded</span></div></div><div class="trust-item"><div class="trust-icon"><i class="fa-solid fa-gift" aria-hidden="true"></i></div><div><strong>Gift Ready</strong><span>Perfect for surprises</span></div></div><div class="trust-item"><div class="trust-icon"><i class="fa-solid fa-box-open" aria-hidden="true"></i></div><div><strong>Minimum Order</strong><span>Starts from 2 jars</span></div></div></div></section>
-<section id="flavours" class="section"><div class="section-head"><div><p class="section-kicker">Dessert jars</p><h2>Dessert jar bestsellers</h2><p class="section-desc">Choose individual flavours or build a bundle. Minimum order is 2 jars.</p></div><a class="btn btn-dark" href="shop.html">View all products <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div><div class="product-grid" id="product-grid"></div></section>
-<section id="about-baker" class="about-baker-section">
-        <div class="about-baker-inner">
-          <div class="baker-image-card">
-            <img src="Images/baker.jpg" alt="Leemah, the baker behind Leemah Cakes N More" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-            <div class="baker-fallback" style="display:none;">Leemah Cakes N More</div>
-          </div>
-          <div class="about-baker-content">
-            <p class="section-kicker">About Leemah</p>
-            <h2>Meet <span>Leemah</span></h2>
-            <p>Chelmsford-based baker creating handcrafted desserts and celebration cakes with care, creativity and premium ingredients.</p>
-            <div class="hero-actions"><a class="btn btn-dark" href="about.html">Read My Story</a></div>
-          </div>
+        <main id="celebration-cakes-page">
+      <section class="celebration-page-hero">
+        <div class="celebration-page-inner">
+          <p class="section-kicker">Celebration cake inspiration</p>
+          <h1>Recent cakes for beautiful moments.</h1>
+          <p>Browse a small curated gallery of celebration cakes, then request a quote for a similar style with your date, size, flavour and theme.</p>
         </div>
       </section>
-<section id="celebration-cakes" class="section cake-inspiration cake-cta-section">
-  <div class="section-head">
-    <div>
-      <p class="section-kicker">Celebration cakes</p>
-      <h2>Need inspiration for your celebration cake?</h2>
-      <p class="section-desc">Browse a curated gallery of recent cakes, then request a quote for a similar design when you are ready.</p>
-    </div>
-    <div class="hero-actions">
-      <a class="btn btn-dark" href="celebration-cakes.html">View Cake Inspiration</a>
-    </div>
-  </div>
-</section>
-<section id="custom-cakes" class="custom-cake-section">
-        <div class="custom-cake-card">
-          <div class="custom-cake-image">
-  <img src="Images/custom-cake.png" alt="Custom celebration cakes by Leemah Cakes N More">
-</div>
-          <div class="custom-cake-content">
-            <div class="eyebrow">Custom cakes available</div>
-            <h2>Celebration cakes made for your moment.</h2>
-            <p>Custom cakes start from <strong>&pound;75</strong>. Final pricing depends on size, flavour, filling, finish, decoration and collection or delivery details.</p>
-            <p>Share your date, serving size, theme, colour palette and inspiration photos so we can price the cake properly.</p>
-            <div class="custom-price"><span>Starting from</span><strong>&pound;75</strong></div>
-            <div class="custom-tags">
-              <span>Birthdays</span>
-              <span>Weddings</span>
-              <span>Celebrations</span>
-              <span>Baby showers</span>
-              <span>Anniversaries</span>
-              <span>Drip cakes</span>
-              <span>Floral cakes</span>
-            </div>
-            <div class="custom-social-panel">
-              <strong>Need design ideas?</strong>
-              <p>If you would like inspiration, you can browse our recent cake designs, colours and finishes. When you request a quote, include your date, serving size, theme and any inspiration photos you already have.</p>
-              <div class="custom-social-links">
-                <a href="https://www.instagram.com/leemahcakesnmore/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i> View Instagram designs</a>
-                <a href="https://www.tiktok.com/@leemahcakes.chelmsford" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-tiktok" aria-hidden="true"></i> Watch cake videos</a>
-              </div>
-            </div>
-            <!-- <button class="btn btn-primary" data-open-custom>Get a Quote in 2 Minutes</button> -->
-             <a 
-  class="btn btn-primary" 
-  href="https://docs.google.com/forms/d/e/1FAIpQLSdtMWZdKEJ-cSH-xo0O8HQ_l6G6aOK7HtV3tH2eKtxP2zXvxQ/viewform?usp=header" 
-  target="_blank" 
-  rel="noopener noreferrer"
->
-  Get a Quote in 2 Minutes
-</a>
-          </div>
-        </div>
-      </section>
-<section id="contact" class="footer">
-        <div class="footer-inner">
-          <div>
-            <div class="lc-logo">
-              <div class="lc-logo-circle">
-                <img class="brand-logo-img" src="Images/logo.jpeg" alt="Leemah Cakes logo" onerror="showLogoFallback(this)">
-                <div class="logo-fallback">
-                  <span class="lc-l">L</span>
-                  <span class="lc-c">C</span>
-                  <span class="lc-cake">cake</span>
-                </div>
-              </div>
-              <div>
-                <p class="lc-logo-text">Leemah <span>Cakes</span></p>
-                <p class="lc-logo-sub">CAKES N MORE</p>
-              </div>
-            </div>
 
-            <p class="footer-copy">Leemah Cakes N More creates beautiful cakes, dessert jars and sweet treats for special moments in Chelmsford and surrounding areas.</p>
-            <div class="fsa-rating-widget footer-fsa-rating-widget" aria-label="Official Food Standards Agency food hygiene rating for Leemah Cakes N More">
-              <script src="https://ratings.food.gov.uk/embed/embed-badge.js" data-business-id="1943288" data-rating-style="3" data-welsh="null"></script>
-            </div>
-            <div class="footer-list">
-              <span>Chelmsford, Essex</span>
-              <span>leemahcakesnmore@gmail.com</span>
-              <span>WhatsApp orders accepted</span>
-              <span>Order Policy: Freshly made to order. Cancellations requested more than 6 hours after placing an order are non-refundable.</span>
-            </div>
-            <div class="socials">
-              <a href="https://www.instagram.com/leemahcakesnmore/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <i class="fa-brands fa-instagram"></i>
-              </a>
-              <a href="https://wa.me/447848281501" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                <i class="fa-brands fa-whatsapp"></i>
-              </a>
-              <a href="https://www.tiktok.com/@leemahcakes.chelmsford" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-                <i class="fa-brands fa-tiktok"></i>
-              </a>
-            </div>
-          </div>
-
-          <div class="enquiry-card">
-            <h2>Quick enquiry</h2>
-            <p>Have a question or special request? Send us a quick message and we’ll get back to you.</p>
-            <form class="form-grid" id="quick-enquiry-form" name="quick-enquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field">
-              <input type="hidden" name="form-name" value="quick-enquiry">
-              <p style="display:none;"><label>Do not fill this out if you are human: <input name="bot-field"></label></p>
-              <div class="two-col">
-                <label class="field"><span>Name</span><input name="name" required placeholder="Your name" /></label>
-                <label class="field"><span>Email</span><input name="email" required type="email" placeholder="you@email.com" /></label>
-              </div>
-              <label class="field"><span>What do you need?</span><textarea name="message" required placeholder="Write your enquiry here. You can ask about availability, orders, delivery, flavours, custom cakes or anything else."></textarea></label>
-              <button class="btn btn-primary" type="submit">Send enquiry</button>
-            </form>
-          </div>
+      <section class="section celebration-gallery-section" aria-label="Celebration cake gallery">
+        <div class="celebration-gallery-grid">
+          <figure class="celebration-gallery-card">
+            <img src="Images/celebration-cakes/floral.PNG" alt="Floral celebration cake by Leemah Cakes N More">
+          </figure>
+          <figure class="celebration-gallery-card">
+            <img src="Images/celebration-cakes/t&m.PNG" alt="Personalised celebration cake by Leemah Cakes N More">
+          </figure>
+          <figure class="celebration-gallery-card">
+            <img src="Images/celebration-cakes/tara.jpeg" alt="Luxury celebration cake by Leemah Cakes N More">
+          </figure>
         </div>
 
-        <div class="copyright">© 2026 Leemah Cakes N More. All rights reserved. Please check ingredients and allergen information before ordering.</div>
+        <div class="celebration-gallery-cta">
+          <a class="btn btn-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdtMWZdKEJ-cSH-xo0O8HQ_l6G6aOK7HtV3tH2eKtxP2zXvxQ/viewform?usp=header" target="_blank" rel="noopener noreferrer">Get a Quote for a Similar Cake</a>
+        </div>
       </section>
     </main>
 
@@ -3379,7 +3016,7 @@
             <strong>Delivery and pickup</strong><br>
             At checkout, you can choose pickup or delivery. Each order is freshly made to order, so cancellations requested more than 6 hours after placing an order are non-refundable.
             <div class="help-chatbot-actions">
-              <a class="help-chatbot-link" href="shop.html#how-it-works" onclick="closeHelpChatbot()">How it works</a>
+              <a class="help-chatbot-link" href="#custom-cakes" onclick="closeHelpChatbot()">Custom cake enquiry</a>
             </div>
           </div>
         `,
@@ -3546,8 +3183,8 @@
       {
         id: "bundle-five",
         type: "bundle",
-        name: "5 Jar Combo",
-        shortName: "5 Jar Combo",
+        name: "The Five Pack Bundle",
+        shortName: "The Five Pack",
         subtitle: "5 handcrafted jars",
         description: "Best value. Ideal for families, gifting, events or dessert tables.",
         price: 35.50,
@@ -3621,11 +3258,23 @@
     }
 
     function createJar(product, compact = false) {
-      return `<div class="jar-stage ${compact ? "jar-stage-compact" : ""}"><div class="jar-photo-wrap"><img class="jar-photo" src="${product.image}" alt="${product.name}" onerror="showJarFallback(this)"><div class="jar-fallback">${createIllustratedJar(product, compact)}</div></div></div>`;
+      return `<div class="jar-stage ${compact ? "jar-stage-compact" : ""}" style="background: ${product.bg}"><div class="jar-photo-wrap"><img class="jar-photo" src="${product.image}" alt="${product.name}" onerror="showJarFallback(this)"><div class="jar-fallback">${createIllustratedJar(product, compact)}</div></div></div>`;
     }
 
     function createProductSlider(product) {
-      return `<div class="jar-stage product-slider"><div class="jar-photo-wrap"><img class="jar-photo" src="${product.image}" alt="${product.name}" onerror="showJarFallback(this)"><div class="jar-fallback">${createIllustratedJar(product)}</div></div></div>`;
+      return `
+        <div class="jar-stage product-slider" id="slider-${product.id}" style="background: ${product.bg}">
+          <div class="slide active" data-slide="front">
+            <div class="jar-photo-wrap"><img class="jar-photo" src="${product.image}" alt="${product.name}" onerror="showJarFallback(this)"><div class="jar-fallback">${createIllustratedJar(product)}</div></div>
+          </div>
+          <div class="slide" data-slide="info">
+            <img class="jar-photo" src="${product.infoImage}" alt="${product.shortName} ingredients and allergen information" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'; this.parentElement.querySelector('.info-storage-note').style.display='none';">
+            <div class="info-slide-card" style="display:none;"><p><strong>Ingredients:</strong> ${product.ingredients}</p><p><strong>Allergen information:</strong> ${product.allergens}</p><p><strong>Storage information:</strong> ${jarStorageInformation}</p></div>
+            <div class="info-storage-note"><strong>Storage information:</strong> ${jarStorageInformation}</div>
+          </div>
+          <button class="slider-arrow slider-arrow-right" type="button" aria-label="View ingredients and allergen information" data-slider-arrow="right" onclick="setProductSlide('${product.id}', 'info')">›</button>
+          <button class="slider-arrow slider-arrow-left" type="button" aria-label="Back to product photo" data-slider-arrow="left" onclick="setProductSlide('${product.id}', 'front')" style="display: none;">‹</button>
+        </div>`;
     }
 
     function setProductSlide(productId, slideName) {
@@ -3718,20 +3367,6 @@ function createBundleJarsFallback(bundle) {
       return `<span class="rating-summary ${extraClass}"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>${average.toFixed(1)} (${reviews.length})</span></span>`;
     }
 
-    function renderHomeRatingSummary(item) {
-      const rating = renderRatingSummary(item);
-      if (rating) return rating;
-      if (item.type !== "bundle") return "";
-
-      const reviews = approvedReviewData
-        .filter(review => String(review.Status || review.status || "approved").toLowerCase() === "approved")
-        .filter(review => getReviewRating(review) > 0);
-      if (!reviews.length) return "";
-
-      const average = reviews.reduce((sum, review) => sum + getReviewRating(review), 0) / reviews.length;
-      return `<span class="rating-summary"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><span>${average.toFixed(1)} (${reviews.length})</span></span>`;
-    }
-
     function renderSoldCount(item) {
       if (!item.soldCount) return "";
       return `<span class="sold-pill">${item.soldCount}+ sold</span>`;
@@ -3740,17 +3375,9 @@ function createBundleJarsFallback(bundle) {
     function renderProducts() {
       const grid = document.getElementById("product-grid");
       if (!grid) return;
-      const featuredBundle = bundles.find(bundle => bundle.id === "bundle-five") || bundles[0];
-      const featuredItems = [...products.slice(0, 3), featuredBundle].filter(Boolean);
-      grid.innerHTML = featuredItems.map(item => {
-        const cartItem = cart.find(cartItem => cartItem.id === item.id);
-        const imageMarkup = item.type === "bundle"
-          ? createBundleImage(item)
-          : createProductSlider(item);
-        const cardClass = item.type === "bundle" ? "product-card home-featured-card" : "product-card";
-        const rating = renderHomeRatingSummary(item);
-        const displayName = item.id === "bundle-five" ? "5 Jar Combo" : item.shortName;
-        return `<article class="${cardClass}">${imageMarkup}<div class="product-body"><h3>${displayName}</h3><div class="price"><strong>${formatMoney(item.price)}</strong></div><div class="product-proof">${rating}</div><div class="product-bottom">${cartItem ? `<div class="qty-control"><button type="button" onclick="removeOne('${item.id}')">-</button><strong>${cartItem.qty}</strong><button type="button" onclick="addToCart('${item.id}')">+</button></div>` : `<button class="btn btn-primary" onclick="addToCart('${item.id}')">Add to cart</button>`}</div></div></article>`;
+      grid.innerHTML = products.map(product => {
+        const cartItem = cart.find(item => item.id === product.id);
+        return `<article class="product-card">${createProductSlider(product)}<div class="product-body"><div class="product-meta">${renderSoldCount(product)}</div><h3>${product.shortName}</h3><p class="subtitle">${product.subtitle}</p><div class="product-proof">${renderRatingSummary(product)}</div><p class="desc">${product.description}</p><div class="product-bottom"><div class="price"><small>From</small><strong>${formatMoney(product.price)}</strong></div>${cartItem ? `<div class="qty-control"><button type="button" onclick="removeOne('${product.id}')">-</button><strong>${cartItem.qty}</strong><button type="button" onclick="addToCart('${product.id}')">+</button></div>` : `<button class="btn btn-primary" onclick="addToCart('${product.id}')">Add to cart</button>`}</div></div></article>`;
       }).join("");
     }
 
@@ -3790,6 +3417,11 @@ function createBundleJarsFallback(bundle) {
           </article>
         `;
       }).join("");
+    }
+    function renderHeroJar() {
+      const heroJar = document.getElementById("hero-jar");
+      if (!heroJar) return;
+      heroJar.innerHTML = createJar(products[0]);
     }
     function updateCartBadges() {
       const count = getCartCount();
@@ -4052,90 +3684,6 @@ function createBundleJarsFallback(bundle) {
     }
     function openMobileMenu() { document.querySelector("[data-mobile-menu]").classList.add("show"); document.body.style.overflow = "hidden"; }
     function closeMobileMenu() { document.querySelector("[data-mobile-menu]").classList.remove("show"); document.body.style.overflow = ""; }
-
-    function initHeroCarousel() {
-      const carousel = document.querySelector("[data-hero-carousel]");
-      if (!carousel) return;
-
-      const slides = Array.from(carousel.querySelectorAll("[data-hero-slide]"));
-      const dots = Array.from(carousel.querySelectorAll("[data-hero-dot]"));
-      const prev = carousel.querySelector("[data-hero-prev]");
-      const next = carousel.querySelector("[data-hero-next]");
-      if (slides.length <= 1) return;
-
-      let activeIndex = 0;
-      let timer = null;
-      let touchStartX = 0;
-      let touchStartY = 0;
-      let pausedByUser = false;
-
-      function showSlide(index) {
-        activeIndex = (index + slides.length) % slides.length;
-        slides.forEach((slide, slideIndex) => {
-          const isActive = slideIndex === activeIndex;
-          slide.classList.toggle("active", isActive);
-          slide.setAttribute("aria-hidden", String(!isActive));
-        });
-        dots.forEach((dot, dotIndex) => {
-          const isActive = dotIndex === activeIndex;
-          dot.classList.toggle("active", isActive);
-          dot.setAttribute("aria-current", isActive ? "true" : "false");
-        });
-      }
-
-      function stopAutoSlide() {
-        if (timer) window.clearInterval(timer);
-        timer = null;
-      }
-
-      function startAutoSlide() {
-        stopAutoSlide();
-        if (!pausedByUser) timer = window.setInterval(() => showSlide(activeIndex + 1), 6500);
-      }
-
-      function userNavigate(index) {
-        pausedByUser = true;
-        stopAutoSlide();
-        showSlide(index);
-      }
-
-      if (prev) prev.addEventListener("click", () => userNavigate(activeIndex - 1));
-      if (next) next.addEventListener("click", () => userNavigate(activeIndex + 1));
-      dots.forEach((dot, dotIndex) => dot.addEventListener("click", () => userNavigate(dotIndex)));
-
-      carousel.addEventListener("keydown", event => {
-        if (event.key === "ArrowLeft") {
-          event.preventDefault();
-          userNavigate(activeIndex - 1);
-        }
-        if (event.key === "ArrowRight") {
-          event.preventDefault();
-          userNavigate(activeIndex + 1);
-        }
-      });
-
-      carousel.addEventListener("mouseenter", stopAutoSlide);
-      carousel.addEventListener("mouseleave", startAutoSlide);
-      carousel.addEventListener("focusin", stopAutoSlide);
-      carousel.addEventListener("focusout", startAutoSlide);
-      carousel.addEventListener("touchstart", event => {
-        const touch = event.changedTouches[0];
-        touchStartX = touch.clientX;
-        touchStartY = touch.clientY;
-      }, { passive: true });
-      carousel.addEventListener("touchend", event => {
-        const touch = event.changedTouches[0];
-        const diffX = touch.clientX - touchStartX;
-        const diffY = touch.clientY - touchStartY;
-        if (Math.abs(diffX) > 45 && Math.abs(diffX) > Math.abs(diffY)) {
-          userNavigate(activeIndex + (diffX < 0 ? 1 : -1));
-        }
-      }, { passive: true });
-
-      showSlide(0);
-      startAutoSlide();
-    }
-
     function updateReviewFlavourToggle() {
       const toggle = document.getElementById("review-flavour-toggle");
       if (!toggle) return;
@@ -4145,8 +3693,7 @@ function createBundleJarsFallback(bundle) {
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-      initHeroCarousel();
-      renderProducts(); renderBundles(); renderCart(); updateCartBadges();
+      renderHeroJar(); renderProducts(); renderBundles(); renderCart(); updateCartBadges();
       document.querySelectorAll("[data-open-cart]").forEach(button => button.addEventListener("click", () => openModal("cart-modal")));
       document.querySelectorAll("[data-open-custom]").forEach(button => button.addEventListener("click", () => openModal("custom-modal")));
       const openMenuBtn = document.querySelector("[data-open-menu]"); const closeMenuBtn = document.querySelector("[data-close-menu]");
